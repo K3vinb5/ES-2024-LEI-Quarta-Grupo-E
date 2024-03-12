@@ -32,6 +32,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "csv",
+      "rootUri": "file:///home/kevin/.pub-cache/hosted/pub.dev/csv-6.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "cupertino_icons",
       "rootUri": "file:///home/kevin/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.6",
       "packageUri": "lib/",
@@ -170,7 +176,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-03-11T13:09:36.504248Z",
+  "generated": "2024-03-12T21:17:13.371662Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }
