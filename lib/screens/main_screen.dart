@@ -30,10 +30,19 @@ class _MainScreenState extends State<MainScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const Row(
+         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            //TODO Buttons (Do Styled Button Widget on another file!!)
+            StyledButton(
+              onPressed: () {},
+              text: "Importar ficheiro local",
+              icon: Icons.folder_copy_rounded,
+            ),
+            StyledButton(
+              onPressed: () {},
+              text: "Importar ficheiro online",
+              icon: Icons.wifi,
+            ),
           ],
         ),
         Padding(
