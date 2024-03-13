@@ -20,7 +20,8 @@ class MainScreen extends StatefulWidget {
 
 ///Classe's State
 class _MainScreenState extends State<MainScreen> {
-  late List<Aula> aulas = [];
+  
+  List<ClassModel> aulas = [];
 
   @override
   void initState() {
