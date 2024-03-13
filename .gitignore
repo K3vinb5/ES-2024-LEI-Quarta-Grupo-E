@@ -45,3 +45,6 @@ build/
 *.swift
 /windows
 /.dart_tool/
+/android/
+/ios/
+
