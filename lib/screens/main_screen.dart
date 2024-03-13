@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:csv/csv.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 import 'package:calendario_iscte/models/models.dart';
@@ -16,12 +20,26 @@ class MainScreen extends StatefulWidget {
 
 ///Classe's State
 class _MainScreenState extends State<MainScreen> {
-  List<Aula> aulas = [];
+  late List<Aula> aulas = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  void importFiles() async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      String csv = await file.readAsString();
+      List<List<dynamic>> list = const CsvToListConverter().convert(csv);
+      setState(() {
+        aulas = Aula.getAulas(list);
+      });
+    }
+
   }
 
   ///UI of class
@@ -34,7 +52,9 @@ class _MainScreenState extends State<MainScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             StyledButton(
-              onPressed: () {},
+              onPressed: () {
+                importFiles();
+              },
               text: "Importar ficheiro local",
               icon: Icons.folder_copy_rounded,
             ),

@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Widget> screens = [MainScreen()];
+  List<Widget> screens = [const MainScreen()];
   List<String> screensTitle = [
     "Main Screen",
     "Screen 2",
