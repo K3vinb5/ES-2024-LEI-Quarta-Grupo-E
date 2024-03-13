@@ -1,1 +1,1 @@
-export 'aula.dart';
+export 'class_model.dart';

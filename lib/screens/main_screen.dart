@@ -35,9 +35,10 @@ class _MainScreenState extends State<MainScreen> {
     if (result != null) {
       File file = File(result.files.single.path!);
       String csv = await file.readAsString();
-      List<List<dynamic>> list = const CsvToListConverter().convert(csv);
+      List<List<dynamic>> list = const CsvToListConverter(fieldDelimiter: ";").convert(csv);
+      list.removeAt(0);
       setState(() {
-        aulas = Aula.getAulas(list);
+        aulas = ClassModel.getClasses(list);
       });
     }
 
@@ -75,12 +76,11 @@ class _MainScreenState extends State<MainScreen> {
               Expanded(
                 child: Column(
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: AulasPaginatedTable(
                         aulas: aulas,
-                        currentAulas: aulas,
                       ),
                     ),
                   ],

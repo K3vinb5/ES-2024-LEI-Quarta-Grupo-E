@@ -53,6 +53,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Colors.indigo,
         ),
         drawer: Drawer(
+          width: MediaQuery.of(context).size.width * 0.35,
           child: ListView(
             children: [
               const DrawerTitle(),

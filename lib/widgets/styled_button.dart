@@ -23,13 +23,14 @@ class StyledButton extends StatelessWidget {
             Text(
               text,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
                 color: Colors.indigo,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
+              height: 45,
             ),
             Icon(
               icon,

@@ -38,6 +38,7 @@ dependencies:
   csv: ^6.0.0
   data_table_2: ^2.5.11
   file_picker: ^6.2.0
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:

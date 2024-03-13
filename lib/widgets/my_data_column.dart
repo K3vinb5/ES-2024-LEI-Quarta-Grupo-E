@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'widgets.dart';
 
 class MyDataColumnLabel extends StatefulWidget {
-  MyDataColumnLabel(
+  const MyDataColumnLabel(
       {super.key, required this.text, required this.onChanged, required this.onTap, required this.active, required this.ascending});
 
   final String text;
@@ -27,11 +27,12 @@ class _MyDataColumnLabelState extends State<MyDataColumnLabel> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Text(
                   widget.text,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 SortIcon(ascending: widget.ascending, active: widget.active),
               ],
@@ -48,7 +49,7 @@ class _MyDataColumnLabelState extends State<MyDataColumnLabel> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
       ],

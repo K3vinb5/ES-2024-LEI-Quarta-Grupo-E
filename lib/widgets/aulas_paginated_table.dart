@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:data_table_2/data_table_2.dart';
-import 'widgets.dart';
 import 'package:calendario_iscte/models/models.dart';
 import 'package:calendario_iscte/sources/sources.dart';
+import 'widgets.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:collection/collection.dart';
 
 class AulasPaginatedTable extends StatefulWidget {
-  AulasPaginatedTable(
-      {super.key, required this.aulas, required this.currentAulas});
+  const AulasPaginatedTable(
+      {super.key, required this.aulas});
 
   final List<ClassModel> aulas;
-  List<ClassModel> currentAulas;
 
   @override
   State<AulasPaginatedTable> createState() {
@@ -19,10 +18,33 @@ class AulasPaginatedTable extends StatefulWidget {
 }
 
 class _MyPaginatedTableState extends State<AulasPaginatedTable> {
+
+  late List<ClassModel> currentAulas;
+
   List<String> columnNames = ["Curso", "UC", "Turno", "Turma", "Inscritos", "Dia", "Início", "Fim", "Data", "Características", "Sala"];
   List<bool> ascending = [false, false, false, false, false, false, false, false, false, false, false];
   List<bool> active = [true, false, false, false, false, false, false, false, false, false, false];
+
   Map<String, dynamic> funcList = {};
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      currentAulas = widget.aulas;
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant AulasPaginatedTable oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.aulas != widget.aulas){
+      setState(() {
+        currentAulas = widget.aulas;
+      });
+    }
+  }
+
 
   void genericOnChange(int index, String value, bool Function(ClassModel) whereFunc) {
     if (value == "") {
@@ -32,15 +54,15 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
       funcList.addAll({index.toString(): whereFunc});
     }
 
-    print(funcList);
+    //print(funcList);
     List<ClassModel> newCurrentAulas = List.from(widget.aulas);
-    print(newCurrentAulas.length);
+    //print(newCurrentAulas.length);
     for (var whereFunc in funcList.entries) {
       newCurrentAulas.removeWhere(whereFunc.value);
-      print(newCurrentAulas.length);
+      //print(newCurrentAulas.length);
     }
     setState(() {
-      widget.currentAulas = newCurrentAulas;
+      currentAulas = newCurrentAulas;
     });
   }
 
@@ -52,7 +74,7 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
       }
       active[index] = true;
       ascending[index] = !ascending[index];
-      widget.currentAulas.sort((a, b) {
+      currentAulas.sort((a, b) {
         if (ascending[index]) {
           return compareTo(a, b);
         } else {
@@ -94,24 +116,8 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
       ],
       source: AulasDataSource(
         context: context,
-        aulas: widget.currentAulas,
+        aulas: currentAulas,
       ),
-    );
-  }
-}
-
-class SortIcon extends StatelessWidget {
-  final bool ascending;
-  final bool active;
-
-  const SortIcon({super.key, required this.ascending, required this.active});
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
-      ascending ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
-      size: 28,
-      color: active ? Colors.black : Colors.black12,
     );
   }
 }
