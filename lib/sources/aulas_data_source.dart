@@ -5,7 +5,7 @@ import 'package:data_table_2/data_table_2.dart';
 class AulasDataSource extends DataTableSource {
 
   final BuildContext context;
-  late List<Aula> aulas;
+  late List<ClassModel> aulas;
 
   AulasDataSource({required this.context, required this.aulas});
 

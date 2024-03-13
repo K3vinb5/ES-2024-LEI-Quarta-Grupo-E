@@ -9,8 +9,8 @@ class AulasPaginatedTable extends StatefulWidget {
   AulasPaginatedTable(
       {super.key, required this.aulas, required this.currentAulas});
 
-  final List<Aula> aulas;
-  List<Aula> currentAulas;
+  final List<ClassModel> aulas;
+  List<ClassModel> currentAulas;
 
   @override
   State<AulasPaginatedTable> createState() {
@@ -24,7 +24,7 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
   List<bool> active = [true, false, false, false, false, false, false, false, false, false, false];
   Map<String, dynamic> funcList = {};
 
-  void genericOnChange(int index, String value, bool Function(Aula) whereFunc) {
+  void genericOnChange(int index, String value, bool Function(ClassModel) whereFunc) {
     if (value == "") {
       funcList.remove(index.toString());
     } else {
@@ -33,7 +33,7 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
     }
 
     print(funcList);
-    List<Aula> newCurrentAulas = List.from(widget.aulas);
+    List<ClassModel> newCurrentAulas = List.from(widget.aulas);
     print(newCurrentAulas.length);
     for (var whereFunc in funcList.entries) {
       newCurrentAulas.removeWhere(whereFunc.value);
@@ -45,7 +45,7 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
   }
 
 
-  void genericOnTap(int index, int Function(Aula, Aula) compareTo) {
+  void genericOnTap(int index, int Function(ClassModel, ClassModel) compareTo) {
     setState(() {
       for (int i = 0; i < active.length; i++) {
         active[i] = false;
@@ -104,7 +104,7 @@ class SortIcon extends StatelessWidget {
   final bool ascending;
   final bool active;
 
-  const SortIcon({required this.ascending, required this.active});
+  const SortIcon({super.key, required this.ascending, required this.active});
 
   @override
   Widget build(BuildContext context) {
