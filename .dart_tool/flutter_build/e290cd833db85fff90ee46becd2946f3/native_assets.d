@@ -1,1 +1,0 @@
- /home/kevin/Documents/3º\ ano/2º\ Semestre/ES/ES-2024-LEI-Quarta-Grupo-E/.dart_tool/flutter_build/e290cd833db85fff90ee46becd2946f3/native_assets.yaml: 
