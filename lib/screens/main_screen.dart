@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 import 'package:calendario_iscte/models/models.dart';
@@ -20,28 +21,45 @@ class MainScreen extends StatefulWidget {
 
 ///Classe's State
 class _MainScreenState extends State<MainScreen> {
-  
-  List<ClassModel> aulas = [];
+  List<ClassModel> aulas = []; //To be imported by user
+  List<String> columnNames = [
+    "Curso",
+    "UC",
+    "Turno",
+    "Turma",
+    "Inscritos",
+    "Dia",
+    "Início",
+    "Fim",
+    "Data",
+    "Características",
+    "Sala"
+  ];
+  late List<bool> visibleColumns = [];
+  bool searchLogic = false;
+  int value = 0;
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    visibleColumns = List.filled(columnNames.length, true);
   }
 
-  void importFiles() async{
+  void importFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
       File file = File(result.files.single.path!);
       String csv = await file.readAsString();
-      List<List<dynamic>> list = const CsvToListConverter(fieldDelimiter: ";").convert(csv);
+      List<List<dynamic>> list =
+      const CsvToListConverter(fieldDelimiter: ";").convert(csv);
       list.removeAt(0);
       setState(() {
         aulas = ClassModel.getClasses(list);
       });
     }
-
   }
 
   ///UI of class
@@ -50,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-         Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             StyledButton(
@@ -64,6 +82,37 @@ class _MainScreenState extends State<MainScreen> {
               onPressed: () {},
               text: "Importar ficheiro online",
               icon: Icons.wifi,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.15,
+              height: MediaQuery.of(context).size.height * 0.05,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.indigo),
+              ),
+              child: DropdownButton(
+                alignment: Alignment.topCenter,
+                focusColor: Colors.white,
+                value: value,
+                items: const [
+                  DropdownMenuItem(
+                    alignment: Alignment.centerLeft,
+                    value: 0,
+                    child: Text("  E"),
+                  ),
+                  DropdownMenuItem(
+                    alignment: Alignment.centerLeft,
+                    value: 1,
+                    child: Text("  OU"),
+                  ),
+                ],
+                onChanged: (index) {
+                  setState(() {
+                    searchLogic = index == 0 ? false : true;
+                    value = index!;
+                  });
+                },
+              ),
             ),
           ],
         ),
@@ -81,6 +130,10 @@ class _MainScreenState extends State<MainScreen> {
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: AulasPaginatedTable(
                         aulas: aulas,
+                        columnNames: columnNames,
+                        hiddenColumns: visibleColumns,
+                        //TODO finish implementing hiddenColumns
+                        searchLogic: searchLogic,
                       ),
                     ),
                   ],
