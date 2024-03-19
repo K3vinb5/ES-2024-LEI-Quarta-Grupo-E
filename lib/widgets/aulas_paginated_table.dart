@@ -7,9 +7,12 @@ import 'package:collection/collection.dart';
 
 class AulasPaginatedTable extends StatefulWidget {
   const AulasPaginatedTable(
-      {super.key, required this.aulas});
+      {super.key, required this.aulas, required this.columnNames, required this.searchLogic, required this.hiddenColumns});
 
   final List<ClassModel> aulas;
+  final List<String> columnNames;
+  final List<bool> hiddenColumns;
+  final bool searchLogic;
 
   @override
   State<AulasPaginatedTable> createState() {
@@ -20,16 +23,18 @@ class AulasPaginatedTable extends StatefulWidget {
 class _MyPaginatedTableState extends State<AulasPaginatedTable> {
 
   late List<ClassModel> currentAulas;
-
-  List<String> columnNames = ["Curso", "UC", "Turno", "Turma", "Inscritos", "Dia", "Início", "Fim", "Data", "Características", "Sala"];
-  List<bool> ascending = [false, false, false, false, false, false, false, false, false, false, false];
-  List<bool> active = [true, false, false, false, false, false, false, false, false, false, false];
-
+  late List<bool> ascending;
+  late List<bool> active;
+  late bool searchLogic;
   Map<String, dynamic> funcList = {};
 
   @override
   void initState() {
     super.initState();
+    searchLogic = widget.searchLogic;
+    ascending = List.filled(widget.columnNames.length, false);
+    active = List.filled(widget.columnNames.length, false);
+    active[0] = true;
     setState(() {
       currentAulas = widget.aulas;
     });
@@ -43,26 +48,50 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
         currentAulas = widget.aulas;
       });
     }
+    if (oldWidget.searchLogic != widget.searchLogic){
+      setState(() {
+        searchLogic = widget.searchLogic;
+        currentAulas = widget.aulas;
+      });
+    }
   }
 
-
-  void genericOnChange(int index, String value, bool Function(ClassModel) whereFunc) {
+  ///Searches all columns with AND and logic
+  void searchAndLogic(int index, String value, bool Function(ClassModel) comparatorFunc) {
     if (value == "") {
       funcList.remove(index.toString());
     } else {
       funcList.remove(index.toString());
-      funcList.addAll({index.toString(): whereFunc});
+      funcList.addAll({index.toString(): comparatorFunc});
     }
 
     //print(funcList);
     List<ClassModel> newCurrentAulas = List.from(widget.aulas);
     //print(newCurrentAulas.length);
-    for (var whereFunc in funcList.entries) {
-      newCurrentAulas.removeWhere(whereFunc.value);
+    for (var comparatorFunc in funcList.entries) {
+      newCurrentAulas.removeWhere(comparatorFunc.value);
       //print(newCurrentAulas.length);
     }
     setState(() {
       currentAulas = newCurrentAulas;
+    });
+  }
+  ///Searches all cokumns with an OR logic
+  void searchOrLogic(int index, String value, bool Function(ClassModel) comparatorFunc){
+    if (value == ""){
+      funcList.remove(index.toString());
+    }else{
+      funcList.remove(index.toString());
+      funcList.addAll({index.toString() : comparatorFunc});
+    }
+    List<ClassModel> newCurrentAulas = [];
+    for (var comparatorFunc in funcList.entries){
+      List<ClassModel> tempList = List.from(widget.aulas);
+      tempList.removeWhere(comparatorFunc.value);
+      newCurrentAulas.addAll(tempList);
+    }
+    setState(() {
+      currentAulas = newCurrentAulas.toSet().toList(); //remove duplicates
     });
   }
 
@@ -98,18 +127,19 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
         borderRadius: BorderRadius.circular(10),
       ),
       columns: [
-        ...columnNames.mapIndexed((index, columnName) {
+        ...widget.columnNames.mapIndexed((index, columnName) {
           return DataColumn(
             label: MyDataColumnLabel(
               text: columnName,
               onChanged: (value){
-                genericOnChange(index, value, (element) => !element.getPropertiesList()[index].contains(value));
+                searchLogic ? searchOrLogic(index, value, (element) => !element.getPropertiesList()[index].contains(value)) : searchAndLogic(index, value, (element) => !element.getPropertiesList()[index].contains(value));
               },
               onTap: (){
                 genericOnTap(index, (a, b) => a.getPropertiesList()[index].compareTo(b.getPropertiesList()[index]));
               },
               active: active[index],
               ascending: ascending[index],
+              searchLogic: searchLogic,
             ),
           );
         }),
