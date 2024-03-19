@@ -6,8 +6,10 @@ class AulasDataSource extends DataTableSource {
 
   final BuildContext context;
   late List<ClassModel> aulas;
+  final List<bool> visibleColumns;
 
-  AulasDataSource({required this.context, required this.aulas});
+  AulasDataSource(
+      {required this.context, required this.aulas, required this.visibleColumns});
 
   @override
   DataRow2 getRow(int index) {
@@ -22,6 +24,7 @@ class AulasDataSource extends DataTableSource {
       ],
     );
   }
+
   @override
   bool get isRowCountApproximate => false;
 
@@ -29,11 +32,17 @@ class AulasDataSource extends DataTableSource {
   int get rowCount => aulas.length;
 
   @override
-  // TODO: temp
+  // TODO: If needed in the future, implement properly
   int get selectedRowCount => 0;
 
-  List<DataCell> dataCells(aula){
-    return List.generate(11, (index) => DataCell(Text(aula.getPropertiesList()[index])));
+  List<DataCell> dataCells(ClassModel aula) {
+    List<DataCell> returnList = [];
+    for(int i = 0; i < aula.getPropertiesList().length; i++){
+      if(visibleColumns[i]){
+        returnList.add(DataCell(Text(aula.getPropertiesList()[i])));
+      }
+    }
+    return returnList;
   }
 
 }
