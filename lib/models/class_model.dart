@@ -54,6 +54,11 @@ class ClassModel {
 
   /// Constructor from a dynamic list (this is used in order to make compatibility
   /// with the csv format provided)
+  /// Parameters:
+  /// - [list]: List of dynamic type that contains the information needed to
+  /// construct a new ClassModel
+  /// Returns:
+  /// A Class Model with the given infomration
   ClassModel.fromDynamicList(List<dynamic> list){
     degree          = list[0];
     curricularUnit  = list[1];
@@ -86,7 +91,7 @@ class ClassModel {
 
   /// Creates a dynamic type list with all the properties from the class model
   /// Returns:
-  /// List (dynamic typing) of the class attributes
+  /// A List (dynamic typing) of the class attributes
   List<dynamic> getPropertiesList(){
     List<dynamic> list = [];
     list.add(degree);
@@ -124,6 +129,8 @@ class ClassModel {
 
   /// Implementation of default method toJson in order to represent an object of
   /// the ClassModel type and its attributes
+  /// Returns:
+  /// A JSON Map that for any given key as the attributed value
   Map<String, dynamic> toJson(){
     return {
       "curso" : degree,

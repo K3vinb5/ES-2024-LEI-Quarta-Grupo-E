@@ -7,10 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 import 'package:calendario_iscte/models/models.dart';
 
-///Classe's widget
+/// Represents the main screen of the application.
+///
+/// This widget serves as the main screen of the application. It's a stateful widget
+/// that can hold mutable state and can be rebuilt when the state changes.
 class MainScreen extends StatefulWidget {
+
+  /// Creates the main screen widget.
+  ///
+  /// The [key] parameter is an optional key to identify this widget.
   const MainScreen({super.key});
 
+  /// The title of the main screen.
+  ///
+  /// This getter method returns the title of the main screen widget.
+  /// Currently, the title is an empty string.
   String get title {
     return "";
   }
@@ -19,13 +30,29 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-///Classe's State
+/// The state for the main screen widget.
+///
+/// This stateful widget manages the state for the main screen of the application.
+/// It contains lists of classes, column names, and other properties necessary
+/// for rendering the user interface.
 class _MainScreenState extends State<MainScreen> {
-  List<ClassModel> aulas = []; //To be imported by user
+
+  /// List of classes imported by the user.
+  List<ClassModel> aulas = [];
+
+  /// Static list of column names.
   List<String> columnNames = ["Curso", "UC", "Turno", "Turma", "Inscritos", "Dia", "Início", "Fim", "Data", "Características", "Sala"]; //static data
-  late List<bool> visibleColumns = []; // visible columns, based on the amount of columns
-  List<String> hiddenColumnNames = []; // Names of the hidden Columns
+
+  /// List of boolean values indicating the visibility of columns.
+  late List<bool> visibleColumns = [];
+
+  /// List of names of hidden columns.
+  List<String> hiddenColumnNames = [];
+
+  /// Boolean flag indicating the search logic.
   bool searchLogic = false;
+
+  /// Dropdown value for the search logic.
   int searchLogicDropDownValue = 0;
 
   @override
@@ -35,6 +62,11 @@ class _MainScreenState extends State<MainScreen> {
     visibleColumns = List.filled(columnNames.length, true);
   }
 
+  /// Imports files asynchronously.
+  ///
+  /// This method allows the user to import files. It prompts the user to select
+  /// a file, reads the file contents as a CSV string, converts the CSV string
+  /// into a list of lists, and then updates the state with the list of classes.
   void importFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -49,7 +81,14 @@ class _MainScreenState extends State<MainScreen> {
       });
     }
   }
-  
+
+  /// Hides the column at the specified index.
+  ///
+  /// This method hides the column at the specified index by updating the
+  /// [visibleColumns] list and adding the column name to the [hiddenColumnNames] list.
+  ///
+  /// Parameters:
+  /// - [index]: int value of the index to hide
   void hideColumn(int index){
     setState(() {
     visibleColumns[index] = false;
@@ -57,7 +96,14 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  ///UI of class
+  /// Builds the user interface for the main screen.
+  ///
+  /// This method constructs the user interface for the main screen widget. It
+  /// includes buttons for importing files, dropdowns for selecting search logic,
+  /// and a paginated table for displaying classes.
+  ///
+  /// Returns:
+  /// A Widget representing the main UI elements of the application
   @override
   Widget build(BuildContext context) {
     return Column(
