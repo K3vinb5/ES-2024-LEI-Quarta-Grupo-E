@@ -2,14 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:calendario_iscte/models/models.dart';
 import 'package:data_table_2/data_table_2.dart';
 
+/// A data source for a data table displaying classes (aulas).
+///
+/// This class implements the [DataTableSource] interface to provide data
+/// for displaying classes in a data table. It contains methods to retrieve
+/// individual rows of data and to determine the total number of rows.
 class AulasDataSource extends DataTableSource {
 
+  /// The build context.
   final BuildContext context;
+
+  /// The list of classes (aulas) to display
   late List<ClassModel> aulas;
+
+  /// The list indicating the visibility of columns
   final List<bool> visibleColumns;
 
+  /// Creates a data source for the aulas data table.
+  ///
+  /// The [context] parameter specifies the build context.
+  /// The [aulas] parameter is the list of classes to display.
+  /// The [visibleColumns] parameter is a list indicating the visibility of columns.
   AulasDataSource(
       {required this.context, required this.aulas, required this.visibleColumns});
+
 
   @override
   DataRow2 getRow(int index) {
