@@ -100,6 +100,7 @@ class ClassModel {
     list.add(date);
     list.add(characteristics);
     list.add(room);
+
     return list;
   }
 
