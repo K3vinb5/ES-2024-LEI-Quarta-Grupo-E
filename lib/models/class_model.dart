@@ -1,6 +1,5 @@
 import 'package:csv/csv.dart';
 
-/// @author Rodrigo Timóteo
 /// This model represents all data related to a class
 class ClassModel {
 
@@ -58,7 +57,7 @@ class ClassModel {
   /// - [list]: List of dynamic type that contains the information needed to
   /// construct a new ClassModel
   /// Returns:
-  /// A Class Model with the given infomration
+  /// A Class Model with the given information
   ClassModel.fromDynamicList(List<dynamic> list){
     degree          = list[0];
     curricularUnit  = list[1];
