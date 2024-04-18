@@ -7,7 +7,11 @@ class DrawerComponent extends StatelessWidget {
   ///
   /// The [text] parameter specifies the text to display on the drawer item.
   /// The [onTap] parameter is a callback function triggered when the item is tapped.
-  const DrawerComponent({super.key, required this.text, required this.onTap});
+  const DrawerComponent({
+    super.key,
+    required this.text,
+    required this.onTap
+  });
 
   /// The text to display on the drawer item.
   final String text;
@@ -22,7 +26,7 @@ class DrawerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: onTap,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
