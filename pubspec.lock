@@ -120,6 +120,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: "771c8feb40ad0ef639973d7ecf1b43d55ffcedb2207fd43fab030f5639e40446"
+      url: "https://pub.dev"
+    source: hosted
+    version: "13.2.4"
   http:
     dependency: "direct main"
     description:
@@ -136,14 +144,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  go_router:
-    dependency: "direct main"
-    description:
-      name: go_router
-      sha256: "771c8feb40ad0ef639973d7ecf1b43d55ffcedb2207fd43fab030f5639e40446"
-      url: "https://pub.dev"
-    source: hosted
-    version: "13.2.4"
   leak_tracker:
     dependency: transitive
     description:
@@ -319,4 +319,4 @@ packages:
     version: "5.3.0"
 sdks:
   dart: ">=3.3.1 <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: ">=3.16.0"

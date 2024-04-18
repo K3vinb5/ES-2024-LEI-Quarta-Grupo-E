@@ -9,7 +9,7 @@ import 'package:data_table_2/data_table_2.dart';
 /// This widget displays classes (aulas) in a paginated table format. It allows
 /// users to navigate through multiple pages of data and provides options for
 /// hiding columns based on user preferences.
-class AulasPaginatedTable extends StatefulWidget {
+class ClassesPaginatedTable extends StatefulWidget {
 
   /// Creates a paginated table widget for displaying classes.
   ///
@@ -19,7 +19,7 @@ class AulasPaginatedTable extends StatefulWidget {
   /// The [visibleColumns] parameter is a list indicating the visibility of columns.
   /// The [hideColumn] parameter is a callback function to hide a column.
   /// The [searchLogic] parameter specifies the search logic to use.
-  const AulasPaginatedTable({
+  const ClassesPaginatedTable({
     super.key,
     required this.aulas,
     required this.columnNames,
@@ -44,7 +44,7 @@ class AulasPaginatedTable extends StatefulWidget {
   final bool searchLogic;
 
   @override
-  State<AulasPaginatedTable> createState() {
+  State<ClassesPaginatedTable> createState() {
     return _MyPaginatedTableState();
   }
 }
@@ -53,7 +53,7 @@ class AulasPaginatedTable extends StatefulWidget {
 ///
 /// This state class manages the state of the AulasPaginatedTable widget,
 /// including the current list of classes (aulas), column sorting, and search logic.
-class _MyPaginatedTableState extends State<AulasPaginatedTable> {
+class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
 
   /// The current list of classes displayed in the table.
   late List<ClassModel> currentAulas;
@@ -104,7 +104,7 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
   /// If the visibility of columns (`visibleColumns`) has changed, updates the
   /// state to reflect the changes.
   @override
-  void didUpdateWidget(covariant AulasPaginatedTable oldWidget) {
+  void didUpdateWidget(covariant ClassesPaginatedTable oldWidget) {
     super.didUpdateWidget(oldWidget);
     //aulas
     if (oldWidget.aulas != widget.aulas) {

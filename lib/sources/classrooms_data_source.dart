@@ -53,11 +53,11 @@ class ClassRoomsDataSource extends DataTableSource {
   // TODO: If needed in the future, implement properly
   int get selectedRowCount => 0;
 
-  List<DataCell> dataCells(ClassRoomModel aula) {
+  List<DataCell> dataCells(ClassRoomModel classRoom) {
     List<DataCell> returnList = [];
-    for(int i = 0; i < aula.getPropertiesList().length; i++){
+    for(int i = 0; i < classRoom.getPropertiesList().length; i++){
       if(visibleColumns[i]){
-        returnList.add(DataCell(Text(aula.getPropertiesList()[i])));
+        returnList.add(DataCell(Text(classRoom.getPropertiesList()[i])));
       }
     }
     return returnList;

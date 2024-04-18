@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:calendario_iscte/widgets/input_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
@@ -20,16 +20,8 @@ class ClassesScreen extends StatefulWidget {
   /// The [key] parameter is an optional key to identify this widget.
   const ClassesScreen({super.key});
 
-  /// The title of the main screen.
-  ///
-  /// This getter method returns the title of the main screen widget.
-  /// Currently, the title is an empty string.
-  String get title {
-    return "";
-  }
-
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<ClassesScreen> createState() => _ClassesScreenState();
 }
 
 /// The state for the main screen widget.
@@ -37,7 +29,7 @@ class ClassesScreen extends StatefulWidget {
 /// This stateful widget manages the state for the main screen of the application.
 /// It contains lists of classes, column names, and other properties necessary
 /// for rendering the user interface.
-class _MainScreenState extends State<MainScreen> {
+class _ClassesScreenState extends State<ClassesScreen> {
 
   /// List of classes imported by the user.
   List<ClassModel> aulas = [];
@@ -259,7 +251,7 @@ class _MainScreenState extends State<MainScreen> {
                     SizedBox(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.8,
-                      child: AulasPaginatedTable(
+                      child: ClassesPaginatedTable(
                         aulas: aulas,
                         columnNames: columnNames,
                         visibleColumns: visibleColumns,

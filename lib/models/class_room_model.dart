@@ -232,7 +232,7 @@ class ClassRoomModel {
       "Laboratório de Redes de Computadores I", "Laboratório de Redes de Computadores II",
       "Laboratório de Telecomunicações", "Sala Aulas Mestrado", "Sala Aulas Mestrado Plus",
       "Sala NEE", "Sala Provas", "Sala Reunião", "Sala de Arquitectura", "Sala de Aulas normal",
-      "videoconferência", "Átrio"
+      "Videoconferência", "Átrio"
     ]);
 
     for (var value in list) {
@@ -296,36 +296,36 @@ class ClassRoomModel {
     list.add(normalCapacity);
     list.add(examCapacity);
     list.add(characteristicsNumber);
-    list.add(isAmphitheater);
-    list.add(isTechSupportForEvents);
-    list.add(isArq1);
-    list.add(isArq2);
-    list.add(isArq3);
-    list.add(isArq4);
-    list.add(isArq5);
-    list.add(isArq6);
-    list.add(isArq9);
-    list.add(isBYOD);
-    list.add(isFocusGroup);
-    list.add(hasPublicSchedule);
-    list.add(isFACLab1);
-    list.add(isFACLab2);
-    list.add(isBELab);
-    list.add(isElectronicsLab);
-    list.add(isComputerLab);
-    list.add(isJournalismLab);
-    list.add(isNetworkLab1);
-    list.add(isNetworkLab2);
-    list.add(isTelecommunicationsLab);
-    list.add(isMastersRoom);
-    list.add(isMastersRoomPlus);
-    list.add(isNEERoom);
-    list.add(isExamRoom);
-    list.add(isReunionRoom);
-    list.add(isArchitectureRoom);
-    list.add(isNormalRoom);
-    list.add(hasVideoconferenceGear);
-    list.add(isAtrium);
+    list.add(isAmphitheater.toString());
+    list.add(isTechSupportForEvents.toString());
+    list.add(isArq1.toString());
+    list.add(isArq2.toString());
+    list.add(isArq3.toString());
+    list.add(isArq4.toString());
+    list.add(isArq5.toString());
+    list.add(isArq6.toString());
+    list.add(isArq9.toString());
+    list.add(isBYOD.toString());
+    list.add(isFocusGroup.toString());
+    list.add(hasPublicSchedule.toString());
+    list.add(isFACLab1.toString());
+    list.add(isFACLab2.toString());
+    list.add(isBELab.toString());
+    list.add(isElectronicsLab.toString());
+    list.add(isComputerLab.toString());
+    list.add(isJournalismLab.toString());
+    list.add(isNetworkLab1.toString());
+    list.add(isNetworkLab2.toString());
+    list.add(isTelecommunicationsLab.toString());
+    list.add(isMastersRoom.toString());
+    list.add(isMastersRoomPlus.toString());
+    list.add(isNEERoom.toString());
+    list.add(isExamRoom.toString());
+    list.add(isReunionRoom.toString());
+    list.add(isArchitectureRoom.toString());
+    list.add(isNormalRoom.toString());
+    list.add(hasVideoconferenceGear.toString());
+    list.add(isAtrium.toString());
 
     return list;
   }

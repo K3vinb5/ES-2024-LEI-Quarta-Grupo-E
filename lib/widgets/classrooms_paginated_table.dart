@@ -15,14 +15,14 @@ class ClassRoomsPaginatedTable extends StatefulWidget {
   /// Creates a paginated table widget for displaying classes.
   ///
   /// The [key] parameter is an optional key to identify this widget.
-  /// The [aulas] parameter is the list of classes to display.
+  /// The [classRooms] parameter is the list of classes to display.
   /// The [columnNames] parameter is the list of column names for the table.
   /// The [visibleColumns] parameter is a list indicating the visibility of columns.
   /// The [hideColumn] parameter is a callback function to hide a column.
   /// The [searchLogic] parameter specifies the search logic to use.
   const ClassRoomsPaginatedTable(
       {super.key,
-        required this.aulas,
+        required this.classRooms,
         required this.columnNames,
         required this.searchLogic,
         required this.visibleColumns,
@@ -30,7 +30,7 @@ class ClassRoomsPaginatedTable extends StatefulWidget {
       });
 
   /// The list of classes (aulas) to display.
-  final List<ClassRoomModel> aulas;
+  final List<ClassRoomModel> classRooms;
 
   /// The list of column names for the table.
   final List<String> columnNames;
@@ -57,7 +57,7 @@ class ClassRoomsPaginatedTable extends StatefulWidget {
 class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
 
   /// The current list of classes displayed in the table.
-  late List<ClassRoomModel> currentAulas;
+  late List<ClassRoomModel> currentClassRooms;
 
   /// List indicating whether each column is sorted in ascending order
   late List<bool> ascending;
@@ -81,7 +81,7 @@ class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
   ///
   /// Initializes [searchLogic] and [visibleColumns] based on the widget's properties.
   /// Sets [ascending] and [active] lists, with the first column being active by default.
-  /// Sets [currentAulas] to the list of classes provided by the widget.
+  /// Sets [currentClassRooms] to the list of classes provided by the widget.
   @override
   void initState() {
     super.initState();
@@ -92,7 +92,7 @@ class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
     active = List.filled(widget.columnNames.length, false);
     active[0] = true;
     setState(() {
-      currentAulas = widget.aulas;
+      currentClassRooms = widget.classRooms;
     });
   }
 
@@ -108,16 +108,16 @@ class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
   void didUpdateWidget(covariant ClassRoomsPaginatedTable oldWidget) {
     super.didUpdateWidget(oldWidget);
     //aulas
-    if (oldWidget.aulas != widget.aulas) {
+    if (oldWidget.classRooms != widget.classRooms) {
       setState(() {
-        currentAulas = widget.aulas;
+        currentClassRooms = widget.classRooms;
       });
     }
     //search logic (E and OU logic)
     if (oldWidget.searchLogic != widget.searchLogic) {
       setState(() {
         searchLogic = widget.searchLogic;
-        currentAulas = widget.aulas;
+        currentClassRooms = widget.classRooms;
       });
     }
     //resets based on dropdown in screen
@@ -147,14 +147,14 @@ class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
     }
 
     print(funcList);
-    List<ClassRoomModel> newCurrentAulas = List.from(widget.aulas);
+    List<ClassRoomModel> newCurrentAulas = List.from(widget.classRooms);
     //print(newCurrentAulas.length);
     for (var comparatorFunc in funcList.entries) {
       newCurrentAulas.removeWhere(comparatorFunc.value);
       //print(newCurrentAulas.length);
     }
     setState(() {
-      currentAulas = newCurrentAulas;
+      currentClassRooms = newCurrentAulas;
     });
   }
 
@@ -176,12 +176,12 @@ class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
     }
     List<ClassRoomModel> newCurrentAulas = [];
     for (var comparatorFunc in funcList.entries) {
-      List<ClassRoomModel> tempList = List.from(widget.aulas);
+      List<ClassRoomModel> tempList = List.from(widget.classRooms);
       tempList.removeWhere(comparatorFunc.value);
       newCurrentAulas.addAll(tempList);
     }
     setState(() {
-      currentAulas = newCurrentAulas.toSet().toList(); //remove duplicates
+      currentClassRooms = newCurrentAulas.toSet().toList(); //remove duplicates
     });
   }
 
@@ -201,7 +201,7 @@ class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
       }
       active[index] = true;
       ascending[index] = !ascending[index];
-      currentAulas.sort((a, b) {
+      currentClassRooms.sort((a, b) {
         if (ascending[index]) {
           return compareTo(a, b);
         } else {
@@ -274,7 +274,7 @@ class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
       ],
       source: ClassRoomsDataSource(
         context: context,
-        classRooms: currentAulas,
+        classRooms: currentClassRooms,
         visibleColumns: visibleColumns,
       ),
     );
