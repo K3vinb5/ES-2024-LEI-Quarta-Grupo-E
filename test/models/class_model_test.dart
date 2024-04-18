@@ -143,7 +143,7 @@ void main() {
     /// - Verifies that the `curricularUnit` property of the [ClassModel]
     /// instances matches the expected values.
     test('GetClasses tests dynamic object conversion to Class Model', () async {
-      String csv = await File('test/test_csv.csv').readAsString();
+      String csv = await File('test/testRoomCSV.csv').readAsString();
 
       List<List<dynamic>> list = const CsvToListConverter(fieldDelimiter: ";")
           .convert(csv);
