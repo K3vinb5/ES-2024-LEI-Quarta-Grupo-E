@@ -1,18 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:calendario_iscte/screens/main_screen.dart';
+import 'package:calendario_iscte/screens/screens.dart';
 
 void main() {
   group('Main Screen Testing Suit', () {
 
     test('Initialize Main Screen Widget and Title', () {
-      const mainScreen = MainScreen();
+      const classesScreen = ClassesScreen();
 
-      expect(mainScreen, isNotNull);
-      expect(mainScreen.title, '');
+      expect(classesScreen, isNotNull);
     });
 
     test('Test Main Screen title', () {
-      const mainScreen = MainScreen();
+      const classesScreen = ClassesScreen();
 
 
     });

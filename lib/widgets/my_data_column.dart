@@ -107,7 +107,10 @@ class _MyDataColumnLabelState extends State<MyDataColumnLabel> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   IconButton(
-                    onPressed: widget.hideColumn,
+                    onPressed: (){
+                      widget.hideColumn();
+                      controller.text = "";
+                      },
                     icon: const Icon(Icons.cancel_outlined),
                     iconSize: 20,
                   ),
@@ -138,11 +141,7 @@ class _MyDataColumnLabelState extends State<MyDataColumnLabel> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: /*TextField(
-                onChanged: widget.onChanged,
-                controller: controller,
-              ),*/
-                  textField,
+              child: textField,
             ),
           ],
         ),

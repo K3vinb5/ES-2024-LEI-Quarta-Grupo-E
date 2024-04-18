@@ -36,6 +36,10 @@ class ClassModel {
   /// Stores the class room in which this class is given
   late String room;
 
+  late String yearWeek;
+
+  late String semesterWeek;
+
   /// ClassModel constructor
   ClassModel({
     required this.degree,
@@ -70,6 +74,8 @@ class ClassModel {
     date            = list[8];
     characteristics = list[9];
     room            = list[10].toString();
+    semesterWeek = calculateSemesterWeek(list[8]);
+    yearWeek = calculateYearWeek(list[8]);
   }
 
   /// Converts a list of lists of dynamic objects (csv representation) into a
@@ -104,7 +110,8 @@ class ClassModel {
     list.add(date);
     list.add(characteristics);
     list.add(room);
-
+    list.add(yearWeek);
+    list.add(semesterWeek);
     return list;
   }
 
@@ -144,6 +151,59 @@ class ClassModel {
       "characteristics" : characteristics,
       "sala" : room,
     };
+  }
+
+  /// Calculates the week number of the year for a given date.
+  ///
+  /// The [dateString] should be in the format "dd/mm/yyyy".
+  /// Returns a String representation of the week number.
+  String calculateYearWeek(String dateString){
+    if (dateString == ""){
+      return "";
+    }
+    List<String> parts = dateString.split('/');
+    int day = int.parse(parts[0]);
+    int month = int.parse(parts[1]);
+    int year = int.parse(parts[2]);
+    DateTime date = DateTime(year, month, day);
+    DateTime firstDayOfYear = DateTime(year, 1, 1);
+    int firstWeekdayOfYear = firstDayOfYear.weekday;
+    int daysPassed = date.difference(firstDayOfYear).inDays;
+    int weekNumber = ((daysPassed + firstWeekdayOfYear) / 7).ceil();
+    return weekNumber.toString();
+  }
+
+  /// Calculates the week number within the semester for a given date.
+  ///
+  /// The [dateString] should be in the format "dd/mm/yyyy".
+  /// Returns a String representation of the week number within the semester.
+  String calculateSemesterWeek(String dateString){
+    if (dateString == ""){
+      return "";
+    }
+    List<String> parts = dateString.split('/');
+    int day = int.parse(parts[0]);
+    int month = int.parse(parts[1]);
+    int year = int.parse(parts[2]);
+
+    int firstSemesterStartMonth = 9;
+    int secondSemesterStartMonth = 2;
+
+    DateTime firstSemesterStartDate = DateTime(month != 1 ? year : (year - 1), 9, 1);
+    DateTime secondSemesterStartDate = DateTime(year, 2, 1);
+
+    DateTime date = DateTime(year, month, day);
+
+    int weekNumber;
+    if (month >= firstSemesterStartMonth || month <= 1) {
+      weekNumber = (date.difference(firstSemesterStartDate).inDays / 7).ceil();
+    } else if (month >= secondSemesterStartMonth || month <= 7) {
+      weekNumber = (date.difference(secondSemesterStartDate).inDays / 7).ceil();
+    } else {
+      return "";
+    }
+
+    return weekNumber.toString();
   }
 
   /// Creates a string with all the classes parameters separated by spaces
