@@ -23,9 +23,11 @@ class AulasDataSource extends DataTableSource {
   /// The [context] parameter specifies the build context.
   /// The [aulas] parameter is the list of classes to display.
   /// The [visibleColumns] parameter is a list indicating the visibility of columns.
-  AulasDataSource(
-      {required this.context, required this.aulas, required this.visibleColumns});
-
+  AulasDataSource( {
+    required this.context,
+    required this.aulas,
+    required this.visibleColumns
+  });
 
   @override
   DataRow2 getRow(int index) {

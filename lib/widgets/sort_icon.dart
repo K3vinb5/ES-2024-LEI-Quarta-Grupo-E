@@ -19,7 +19,11 @@ class SortIcon extends StatelessWidget {
   /// - [key]: An optional key to identify this widget.
   /// - [ascending]: A boolean value indicating whether the sorting order is ascending.
   /// - [active]: A boolean value indicating whether the sort icon is active.
-  const SortIcon({super.key, required this.ascending, required this.active});
+  const SortIcon({
+    super.key,
+    required this.ascending,
+    required this.active
+  });
 
   /// Builds the widget tree for this sort icon.
   ///
