@@ -272,8 +272,13 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
         ...columns(),
       ],
       source: ClassesDataSource(
+        updateState: (change) {
+          setState(() {
+            change();
+          });
+        },
         context: context,
-        aulas: currentAulas,
+        classes: currentAulas,
         visibleColumns: visibleColumns,
       ),
     );

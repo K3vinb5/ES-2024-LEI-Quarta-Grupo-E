@@ -52,3 +52,4 @@ build/
 .flutter-plugins-dependencies
 /.dart_tool/
 /windows/
+.flutter-plugins-dependencies

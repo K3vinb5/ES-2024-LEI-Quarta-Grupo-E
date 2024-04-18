@@ -115,6 +115,50 @@ class ClassModel {
     return list;
   }
 
+  void setProperty(int index, String value){
+    switch (index){
+      case 0:
+        degree = value;
+        break;
+      case 1:
+        curricularUnit = value;
+        break;
+      case 2:
+        shift = value;
+        break;
+      case 3:
+        className = value;
+        break;
+      case 4:
+        enrolled = int.parse(value);
+        break;
+      case 5:
+        dayOfTheWeek = value;
+        break;
+      case 6:
+        initTime = value;
+        break;
+      case 7:
+        finalTime = value;
+        break;
+      case 8:
+        date = value;
+        break;
+      case 9:
+        characteristics = value;
+        break;
+      case 10:
+        room = value;
+        break;
+      case 11:
+        yearWeek = value;
+        break;
+      case 12:
+        semesterWeek = value;
+        break;
+    }
+  }
+
   /// Converts a list of classes into a csv string
   /// Parameters:
   /// - [list]: List of Classes
