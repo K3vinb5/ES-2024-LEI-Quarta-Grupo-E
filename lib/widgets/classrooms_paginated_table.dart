@@ -1,3 +1,4 @@
+import 'package:calendario_iscte/models/class_room_model.dart';
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/models/models.dart';
 import 'package:calendario_iscte/sources/sources.dart';
@@ -9,7 +10,7 @@ import 'package:data_table_2/data_table_2.dart';
 /// This widget displays classes (aulas) in a paginated table format. It allows
 /// users to navigate through multiple pages of data and provides options for
 /// hiding columns based on user preferences.
-class AulasPaginatedTable extends StatefulWidget {
+class ClassRoomsPaginatedTable extends StatefulWidget {
 
   /// Creates a paginated table widget for displaying classes.
   ///
@@ -19,17 +20,17 @@ class AulasPaginatedTable extends StatefulWidget {
   /// The [visibleColumns] parameter is a list indicating the visibility of columns.
   /// The [hideColumn] parameter is a callback function to hide a column.
   /// The [searchLogic] parameter specifies the search logic to use.
-  const AulasPaginatedTable(
+  const ClassRoomsPaginatedTable(
       {super.key,
-      required this.aulas,
-      required this.columnNames,
-      required this.searchLogic,
-      required this.visibleColumns,
-      required this.hideColumn,
+        required this.aulas,
+        required this.columnNames,
+        required this.searchLogic,
+        required this.visibleColumns,
+        required this.hideColumn,
       });
 
   /// The list of classes (aulas) to display.
-  final List<ClassModel> aulas;
+  final List<ClassRoomModel> aulas;
 
   /// The list of column names for the table.
   final List<String> columnNames;
@@ -44,7 +45,7 @@ class AulasPaginatedTable extends StatefulWidget {
   final bool searchLogic;
 
   @override
-  State<AulasPaginatedTable> createState() {
+  State<ClassRoomsPaginatedTable> createState() {
     return _MyPaginatedTableState();
   }
 }
@@ -53,10 +54,10 @@ class AulasPaginatedTable extends StatefulWidget {
 ///
 /// This state class manages the state of the AulasPaginatedTable widget,
 /// including the current list of classes (aulas), column sorting, and search logic.
-class _MyPaginatedTableState extends State<AulasPaginatedTable> {
+class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
 
   /// The current list of classes displayed in the table.
-  late List<ClassModel> currentAulas;
+  late List<ClassRoomModel> currentAulas;
 
   /// List indicating whether each column is sorted in ascending order
   late List<bool> ascending;
@@ -104,7 +105,7 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
   /// If the visibility of columns (`visibleColumns`) has changed, updates the
   /// state to reflect the changes.
   @override
-  void didUpdateWidget(covariant AulasPaginatedTable oldWidget) {
+  void didUpdateWidget(covariant ClassRoomsPaginatedTable oldWidget) {
     super.didUpdateWidget(oldWidget);
     //aulas
     if (oldWidget.aulas != widget.aulas) {
@@ -137,7 +138,7 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
   /// - [value]: If provided adds new search function for the column
   /// - [comparatorFunc]: Comparator function to use for the comparison
   void searchAndLogic(
-      int index, String value, bool Function(ClassModel) comparatorFunc) {
+      int index, String value, bool Function(ClassRoomModel) comparatorFunc) {
     if (value == "") {
       funcList.remove(index.toString());
     } else {
@@ -145,8 +146,8 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
       funcList.addAll({index.toString(): comparatorFunc});
     }
 
-    //print(funcList);
-    List<ClassModel> newCurrentAulas = List.from(widget.aulas);
+    print(funcList);
+    List<ClassRoomModel> newCurrentAulas = List.from(widget.aulas);
     //print(newCurrentAulas.length);
     for (var comparatorFunc in funcList.entries) {
       newCurrentAulas.removeWhere(comparatorFunc.value);
@@ -166,16 +167,16 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
   /// - [value]: If provided adds new search function for the column
   /// - [comparatorFunc]: Comparator function to use for the comparison
   void searchOrLogic(
-      int index, String value, bool Function(ClassModel) comparatorFunc) {
+      int index, String value, bool Function(ClassRoomModel) comparatorFunc) {
     if (value == "") {
       funcList.remove(index.toString());
     } else {
       funcList.remove(index.toString());
       funcList.addAll({index.toString(): comparatorFunc});
     }
-    List<ClassModel> newCurrentAulas = [];
+    List<ClassRoomModel> newCurrentAulas = [];
     for (var comparatorFunc in funcList.entries) {
-      List<ClassModel> tempList = List.from(widget.aulas);
+      List<ClassRoomModel> tempList = List.from(widget.aulas);
       tempList.removeWhere(comparatorFunc.value);
       newCurrentAulas.addAll(tempList);
     }
@@ -193,7 +194,7 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
   /// Parameters:
   /// - [index]: Activates a column from given index
   /// - [compareTo]: function used to sort in desired order
-  void genericOnTap(int index, int Function(ClassModel, ClassModel) compareTo) {
+  void genericOnTap(int index, int Function(ClassRoomModel, ClassRoomModel) compareTo) {
     setState(() {
       for (int i = 0; i < active.length; i++) {
         active[i] = false;
@@ -225,20 +226,20 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
             onChanged: (value) {
               searchLogic
                   ? searchOrLogic(
-                      i,
-                      value,
+                  i,
+                  value,
                       (element) =>
-                          !element.getPropertiesList()[i].contains(value))
+                  !element.getPropertiesList()[i].contains(value))
                   : searchAndLogic(
-                      i,
-                      value,
+                  i,
+                  value,
                       (element) =>
-                          !element.getPropertiesList()[i].contains(value));
+                  !element.getPropertiesList()[i].contains(value));
             },
             onTap: () {
               genericOnTap(
                   i,
-                  (a, b) => a
+                      (a, b) => a
                       .getPropertiesList()[i]
                       .compareTo(b.getPropertiesList()[i]));
             },
@@ -271,9 +272,9 @@ class _MyPaginatedTableState extends State<AulasPaginatedTable> {
       columns: [
         ...columns(),
       ],
-      source: AulasDataSource(
+      source: ClassRoomsDataSource(
         context: context,
-        aulas: currentAulas,
+        classRooms: currentAulas,
         visibleColumns: visibleColumns,
       ),
     );

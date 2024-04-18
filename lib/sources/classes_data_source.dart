@@ -7,7 +7,7 @@ import 'package:data_table_2/data_table_2.dart';
 /// This class implements the [DataTableSource] interface to provide data
 /// for displaying classes in a data table. It contains methods to retrieve
 /// individual rows of data and to determine the total number of rows.
-class AulasDataSource extends DataTableSource {
+class ClassesDataSource extends DataTableSource {
 
   /// The build context.
   final BuildContext context;
@@ -23,7 +23,7 @@ class AulasDataSource extends DataTableSource {
   /// The [context] parameter specifies the build context.
   /// The [aulas] parameter is the list of classes to display.
   /// The [visibleColumns] parameter is a list indicating the visibility of columns.
-  AulasDataSource(
+  ClassesDataSource(
       {required this.context, required this.aulas, required this.visibleColumns});
 
 

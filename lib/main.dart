@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'screens/screens.dart';
 import 'widgets/widgets.dart';
 
@@ -6,6 +7,65 @@ import 'widgets/widgets.dart';
 void main() {
   runApp(const MyApp());
 }
+
+final GlobalKey<NavigatorState> _rootNavigatorKey =
+GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _classesNavigatorKey =
+GlobalKey<NavigatorState>(debugLabel: 'classes');
+final GlobalKey<NavigatorState> _classRoomsNavigatorKey =
+GlobalKey<NavigatorState>(debugLabel: 'classRooms');
+
+final GoRouter _router = GoRouter(
+  navigatorKey: _rootNavigatorKey,
+  initialLocation: '/classes',
+  routes: <RouteBase>[
+    StatefulShellRoute.indexedStack(
+      builder: (BuildContext context, GoRouterState state,
+          StatefulNavigationShell navigationShell) {
+        // Return the widget that implements the custom shell (in this case
+        // using a BottomNavigationBar). The StatefulNavigationShell is passed
+        // to be able access the state of the shell and to navigate to other
+        // branches in a stateful way.
+        return ScaffoldWithDrawer(navigationShell: navigationShell);
+      },
+      branches: <StatefulShellBranch>[
+        // The route branch for the first tab of the bottom navigation bar.
+        StatefulShellBranch(
+          navigatorKey: _classesNavigatorKey,
+          routes: <RouteBase>[
+            GoRoute(
+              // The screen to display as the root in the first tab of the
+              // bottom navigation bar.
+              path: '/classes',
+              builder: (BuildContext context, GoRouterState state) =>
+              const ClassesScreen(),
+              /*routes: [
+
+              ],*/
+            ),
+          ],
+        ),
+
+        // The route branch for the second tab of the bottom navigation bar.
+        StatefulShellBranch(
+          navigatorKey: _classRoomsNavigatorKey,
+          routes: <RouteBase>[
+            GoRoute(
+              // The screen to display as the root in the second tab of the
+              // bottom navigation bar.
+              path: '/classRooms',
+              builder: (BuildContext context, GoRouterState state) =>
+              const ClassRoomsScreen(),
+              /*routes: [
+
+              ],*/
+            ),
+          ],
+        ),
+      ],
+    ),
+  ],
+);
 
 /// The root widget of the application.
 class MyApp extends StatefulWidget {
@@ -20,72 +80,17 @@ class MyApp extends StatefulWidget {
 /// The state class for the [MyApp] widget.
 class _MyAppState extends State<MyApp> {
 
-  /// List of screens in the application.
-  List<Widget> screens = [const MainScreen()];
-
-  /// List of titles corresponding to each screen
-  List<String> screensTitle = [
-    "Main Screen",
-    "Screen 2",
-    "Screen 3",
-    "Screen 4",
-    "Screen 5"
-  ];
-
-  /// Index of the currently active screen.
-  int currentScreenIndex = 0;
-
-  /// Widget representing the current screen.
-  late Widget currentScreen;
-
-  /// Title of the current screen.
-  late String currentScreenTitle;
-
-  /// Overrides the [initState] method to initialize the state of the widget.
-  @override
-  void initState() {
-    super.initState();
-    currentScreen = screens[currentScreenIndex];
-    currentScreenTitle = screensTitle[currentScreenIndex];
-  }
-
   /// Builds the UI of the application.
   ///
   /// Returns:
   /// A new root widget for the application to be built upon
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Calendário Iscte',
+    return MaterialApp.router(
+      routerConfig: _router,
+      title: 'Iscte Calendar',
       theme: ThemeData(
         primaryColor: Colors.indigo,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          foregroundColor: Colors.white, //Changes drawer color
-          title: Text(
-            currentScreenTitle,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          backgroundColor: Colors.indigo,
-        ),
-        drawer: Drawer(
-          width: MediaQuery.of(context).size.width * 0.35,
-          child: ListView(
-            children: [
-              const DrawerTitle(),
-              ...screensTitle.map((title) {
-                return DrawerComponent(
-                  text: title,
-                  onTap: () {},
-                );
-              })
-            ],
-          ),
-        ),
-        body: currentScreen,
       ),
     );
   }
