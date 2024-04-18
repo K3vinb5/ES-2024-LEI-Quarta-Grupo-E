@@ -163,11 +163,11 @@ class ClassRoomModel {
   /// Returns:
   /// A ClassRoomModel with the given information
   ClassRoomModel.fromDynamicList(List<dynamic> list){
-    building = list[0];
-    roomName = list[1];
-    normalCapacity = list[2];
-    examCapacity = list[3];
-    characteristicsNumber = list[4];
+    building = list[0].toString();
+    roomName = list[1].toString();
+    normalCapacity = list[2].toString();
+    examCapacity = list[3].toString();
+    characteristicsNumber = list[4].toString();
     isAmphitheater = convertStringToBool(list[5]);
     isTechSupportForEvents = convertStringToBool(list[6]);
     isArq1 = convertStringToBool(list[7]);
@@ -294,6 +294,7 @@ class ClassRoomModel {
     list.add(building);
     list.add(roomName);
     list.add(normalCapacity);
+    list.add(examCapacity);
     list.add(characteristicsNumber);
     list.add(isAmphitheater);
     list.add(isTechSupportForEvents);
@@ -319,10 +320,12 @@ class ClassRoomModel {
     list.add(isMastersRoom);
     list.add(isMastersRoomPlus);
     list.add(isNEERoom);
+    list.add(isExamRoom);
     list.add(isReunionRoom);
     list.add(isArchitectureRoom);
     list.add(isNormalRoom);
     list.add(hasVideoconferenceGear);
+    list.add(isAtrium);
 
     return list;
   }
@@ -336,7 +339,8 @@ class ClassRoomModel {
         "$isArq9 $isBYOD $isFocusGroup $hasPublicSchedule $isFACLab1 $isFACLab2 "
         "$isBELab $isElectronicsLab $isComputerLab $isJournalismLab $isNetworkLab1 "
         "$isNetworkLab2 $isTelecommunicationsLab $isMastersRoom $isMastersRoomPlus "
-        "$isNEERoom $isReunionRoom $isArchitectureRoom $isNormalRoom $hasVideoconferenceGear ";
+        "$isNEERoom $isExamRoom $isReunionRoom $isArchitectureRoom $isNormalRoom "
+        "$hasVideoconferenceGear";
   }
 
 }
