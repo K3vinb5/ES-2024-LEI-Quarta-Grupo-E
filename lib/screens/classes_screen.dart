@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:calendario_iscte/widgets/input_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 import 'package:calendario_iscte/models/models.dart';
@@ -27,7 +29,7 @@ class ClassesScreen extends StatefulWidget {
   }
 
   @override
-  State<ClassesScreen> createState() => _ClassesScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
 /// The state for the main screen widget.
@@ -35,7 +37,7 @@ class ClassesScreen extends StatefulWidget {
 /// This stateful widget manages the state for the main screen of the application.
 /// It contains lists of classes, column names, and other properties necessary
 /// for rendering the user interface.
-class _ClassesScreenState extends State<ClassesScreen>{
+class _MainScreenState extends State<MainScreen> {
 
   /// List of classes imported by the user.
   List<ClassModel> aulas = [];
@@ -67,7 +69,7 @@ class _ClassesScreenState extends State<ClassesScreen>{
   /// This method allows the user to import files. It prompts the user to select
   /// a file, reads the file contents as a CSV string, converts the CSV string
   /// into a list of lists, and then updates the state with the list of classes.
-  void importFiles() async {
+  void importLocalFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
@@ -79,6 +81,44 @@ class _ClassesScreenState extends State<ClassesScreen>{
       setState(() {
         aulas = ClassModel.getClasses(list);
       });
+    }
+  }
+
+  /// Imports CSV file data from the provided URL and updates the state with the parsed data.
+  ///
+  /// Parameters:
+  /// - [url]: parameter specifies the URL of the CSV file to import.
+  ///
+  /// Throws an error if the HTTP request fails or if the response status code is not 200 (OK).
+  /// If the content type of the response is 'text/csv', the CSV data is decoded as UTF-8
+  /// and parsed into a list of lists using a ';' as the field delimiter. The first
+  /// row (header) is removed from the parsed data.
+  ///
+  /// The parsed data is used to instantiate [ClassModel] objects, and the state
+  /// is updated with the resulting list of classes.
+  void importOnlineFiles(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if(response.statusCode == 200) { // Status code OK
+        String? contentType = response.headers['content-type'];
+
+        if(contentType?.toLowerCase().contains('text/csv') ?? false) {
+          String csv = utf8.decode(response.body.runes.toList());
+
+          List<List<dynamic>> list =
+          const CsvToListConverter(fieldDelimiter: ";").convert(csv);
+
+          list.removeAt(0);
+          setState(() {
+            aulas = ClassModel.getClasses(list);
+          });
+        } else {
+          print("Not a CSV");
+        }
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -114,13 +154,25 @@ class _ClassesScreenState extends State<ClassesScreen>{
           children: [
             StyledButton(
               onPressed: () {
-                importFiles();
+                importLocalFiles();
               },
               text: "Importar ficheiro local",
               icon: Icons.folder_copy_rounded,
             ),
             StyledButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return InputDialog(
+                        text: "Introduza uma URL",
+                        onInputSubmitted: (String url) {
+                          importOnlineFiles(url);
+                        },
+                      );
+                    },
+                );
+              },
               text: "Importar ficheiro online",
               icon: Icons.wifi,
             ),

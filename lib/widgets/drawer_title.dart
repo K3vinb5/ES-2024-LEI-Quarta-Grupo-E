@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class DrawerTitle extends StatelessWidget {
 
   /// Constructs a [DrawerTitle] widget.
-  const DrawerTitle({super.key});
+  const DrawerTitle({
+    super.key
+  });
 
   /// Builds the widget tree for this drawer title.
   ///

@@ -19,14 +19,14 @@ class AulasPaginatedTable extends StatefulWidget {
   /// The [visibleColumns] parameter is a list indicating the visibility of columns.
   /// The [hideColumn] parameter is a callback function to hide a column.
   /// The [searchLogic] parameter specifies the search logic to use.
-  const AulasPaginatedTable(
-      {super.key,
-      required this.aulas,
-      required this.columnNames,
-      required this.searchLogic,
-      required this.visibleColumns,
-      required this.hideColumn,
-      });
+  const AulasPaginatedTable({
+    super.key,
+    required this.aulas,
+    required this.columnNames,
+    required this.searchLogic,
+    required this.visibleColumns,
+    required this.hideColumn,
+  });
 
   /// The list of classes (aulas) to display.
   final List<ClassModel> aulas;

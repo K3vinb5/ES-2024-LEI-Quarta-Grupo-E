@@ -10,11 +10,12 @@ class StyledButton extends StatelessWidget {
   /// Creates a styled button.
   ///
   /// The [onPressed], [text], and [icon] parameters are required.
-  const StyledButton(
-      {super.key,
-      required this.onPressed,
-      required this.text,
-      required this.icon});
+  const StyledButton({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    required this.icon
+  });
 
   /// The callback function to be called when the button is pressed.
   final void Function() onPressed;
