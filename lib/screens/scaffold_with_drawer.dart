@@ -56,6 +56,7 @@ class _ScaffoldWithDrawerState extends State<ScaffoldWithDrawer> {
                 text: title,
                 onTap: () {
                   _onTap(context, index);
+                  Navigator.pop(context);
                   currentScreenTitle = screensTitle[index];
                 },
               );
