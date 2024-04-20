@@ -123,6 +123,42 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     }
   }
 
+  void exportToCSV() async {
+    String? outputFile = await FilePicker.platform.saveFile(
+      dialogTitle: 'Please select an output file:',
+      fileName: 'Salas.csv',
+    );
+
+    if (outputFile == null) {
+      // User canceled the picker
+    } else {
+      String csv = ClassRoomModel.toCsv(classRooms);
+      File f = File(outputFile!);
+      f.writeAsString(csv);
+      final exPath = f.path;
+      await File(exPath).create(recursive: true);
+    }
+  }
+
+  void exportToJSON() async{
+    String? outputFile = await FilePicker.platform.saveFile(
+      dialogTitle: 'Please select an output file:',
+      fileName: 'Salas.json',
+    );
+
+    if (outputFile == null) {
+      // User canceled the picker
+    } else {
+
+      String json = jsonEncode(classRooms);
+      File f = File(outputFile!);
+      f.writeAsString(json);
+      final exPath = f.path;
+      await File(exPath).create(recursive: true);
+
+    }
+  }
+
   void hideColumn(int index){
     setState(() {
       visibleColumns[index] = false;
@@ -234,6 +270,20 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
                   });
                 },
               ),
+            ),
+            StyledButton(
+              onPressed: () {
+                exportToCSV();
+              },
+              text: "Gravar alterações para CSV",
+              icon: Icons.download,
+            ),
+            StyledButton(
+              onPressed: () {
+                exportToJSON();
+              },
+              text: "Gravar alterações para JSON",
+              icon: Icons.download,
             ),
           ],
         ),
