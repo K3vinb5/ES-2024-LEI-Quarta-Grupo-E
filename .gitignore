@@ -7,6 +7,7 @@ target/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
+.idea/misc.xml
 .idea/libraries/
 *.iws
 *.iml
@@ -43,10 +44,12 @@ build/
 .dart_tool/package_config_subset
 /linux/
 *.swift
-/windows/
-/.dart_tool/
 /android/
 /ios/
 
+## Flutter ##
 .flutter-plugins
+.flutter-plugins-dependencies
+/.dart_tool/
+/windows/
 .flutter-plugins-dependencies

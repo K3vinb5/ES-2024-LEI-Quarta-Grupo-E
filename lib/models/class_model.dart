@@ -1,6 +1,5 @@
 import 'package:csv/csv.dart';
 
-/// @author Rodrigo Timóteo
 /// This model represents all data related to a class
 class ClassModel {
 
@@ -37,6 +36,10 @@ class ClassModel {
   /// Stores the class room in which this class is given
   late String room;
 
+  late String yearWeek;
+
+  late String semesterWeek;
+
   /// ClassModel constructor
   ClassModel({
     required this.degree,
@@ -54,6 +57,11 @@ class ClassModel {
 
   /// Constructor from a dynamic list (this is used in order to make compatibility
   /// with the csv format provided)
+  /// Parameters:
+  /// - [list]: List of dynamic type that contains the information needed to
+  /// construct a new ClassModel
+  /// Returns:
+  /// A Class Model with the given information
   ClassModel.fromDynamicList(List<dynamic> list){
     degree          = list[0];
     curricularUnit  = list[1];
@@ -66,6 +74,8 @@ class ClassModel {
     date            = list[8];
     characteristics = list[9];
     room            = list[10].toString();
+    semesterWeek = calculateSemesterWeek(list[8]);
+    yearWeek = calculateYearWeek(list[8]);
   }
 
   /// Converts a list of lists of dynamic objects (csv representation) into a
@@ -86,7 +96,7 @@ class ClassModel {
 
   /// Creates a dynamic type list with all the properties from the class model
   /// Returns:
-  /// List (dynamic typing) of the class attributes
+  /// A List (dynamic typing) of the class attributes
   List<dynamic> getPropertiesList(){
     List<dynamic> list = [];
     list.add(degree);
@@ -100,7 +110,53 @@ class ClassModel {
     list.add(date);
     list.add(characteristics);
     list.add(room);
+    list.add(yearWeek);
+    list.add(semesterWeek);
     return list;
+  }
+
+  void setProperty(int index, String value){
+    switch (index){
+      case 0:
+        degree = value;
+        break;
+      case 1:
+        curricularUnit = value;
+        break;
+      case 2:
+        shift = value;
+        break;
+      case 3:
+        className = value;
+        break;
+      case 4:
+        enrolled = int.parse(value);
+        break;
+      case 5:
+        dayOfTheWeek = value;
+        break;
+      case 6:
+        initTime = value;
+        break;
+      case 7:
+        finalTime = value;
+        break;
+      case 8:
+        date = value;
+        break;
+      case 9:
+        characteristics = value;
+        break;
+      case 10:
+        room = value;
+        break;
+      case 11:
+        yearWeek = value;
+        break;
+      case 12:
+        semesterWeek = value;
+        break;
+    }
   }
 
   /// Converts a list of classes into a csv string
@@ -123,6 +179,8 @@ class ClassModel {
 
   /// Implementation of default method toJson in order to represent an object of
   /// the ClassModel type and its attributes
+  /// Returns:
+  /// A JSON Map that for any given key as the attributed value
   Map<String, dynamic> toJson(){
     return {
       "curso" : degree,
@@ -137,6 +195,59 @@ class ClassModel {
       "characteristics" : characteristics,
       "sala" : room,
     };
+  }
+
+  /// Calculates the week number of the year for a given date.
+  ///
+  /// The [dateString] should be in the format "dd/mm/yyyy".
+  /// Returns a String representation of the week number.
+  String calculateYearWeek(String dateString){
+    if (dateString == ""){
+      return "";
+    }
+    List<String> parts = dateString.split('/');
+    int day = int.parse(parts[0]);
+    int month = int.parse(parts[1]);
+    int year = int.parse(parts[2]);
+    DateTime date = DateTime(year, month, day);
+    DateTime firstDayOfYear = DateTime(year, 1, 1);
+    int firstWeekdayOfYear = firstDayOfYear.weekday;
+    int daysPassed = date.difference(firstDayOfYear).inDays;
+    int weekNumber = ((daysPassed + firstWeekdayOfYear) / 7).ceil();
+    return weekNumber.toString();
+  }
+
+  /// Calculates the week number within the semester for a given date.
+  ///
+  /// The [dateString] should be in the format "dd/mm/yyyy".
+  /// Returns a String representation of the week number within the semester.
+  String calculateSemesterWeek(String dateString){
+    if (dateString == ""){
+      return "";
+    }
+    List<String> parts = dateString.split('/');
+    int day = int.parse(parts[0]);
+    int month = int.parse(parts[1]);
+    int year = int.parse(parts[2]);
+
+    int firstSemesterStartMonth = 9;
+    int secondSemesterStartMonth = 2;
+
+    DateTime firstSemesterStartDate = DateTime(month != 1 ? year : (year - 1), 9, 1);
+    DateTime secondSemesterStartDate = DateTime(year, 2, 1);
+
+    DateTime date = DateTime(year, month, day);
+
+    int weekNumber;
+    if (month >= firstSemesterStartMonth || month <= 1) {
+      weekNumber = (date.difference(firstSemesterStartDate).inDays / 7).ceil();
+    } else if (month >= secondSemesterStartMonth || month <= 7) {
+      weekNumber = (date.difference(secondSemesterStartDate).inDays / 7).ceil();
+    } else {
+      return "";
+    }
+
+    return weekNumber.toString();
   }
 
   /// Creates a string with all the classes parameters separated by spaces

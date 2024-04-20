@@ -39,6 +39,9 @@ dependencies:
   data_table_2: ^2.5.11
   file_picker: ^6.2.0
   collection: ^1.18.0
+  go_router: ^13.2.4
+  http: ^1.2.1
+  build_runner: ^2.4.9
 
 dev_dependencies:
   flutter_test:
