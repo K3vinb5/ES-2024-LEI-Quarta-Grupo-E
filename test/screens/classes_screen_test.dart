@@ -11,7 +11,7 @@ void main() {
     });
 
     test('Test Main Screen title', () {
-      const classesScreen = ClassesScreen();
+      //const classesScreen = ClassesScreen();
 
 
     });

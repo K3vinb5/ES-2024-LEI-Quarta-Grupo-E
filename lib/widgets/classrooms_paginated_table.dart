@@ -1,3 +1,4 @@
+import 'package:calendario_iscte/main.dart';
 import 'package:calendario_iscte/models/class_room_model.dart';
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/models/models.dart';
@@ -276,6 +277,12 @@ class _MyPaginatedTableState extends State<ClassRoomsPaginatedTable> {
         context: context,
         classRooms: currentClassRooms,
         visibleColumns: visibleColumns,
+        updateState: (change) {
+          setState(() {
+            change();
+            globalClassRooms = currentClassRooms;
+          });
+        },
       ),
     );
   }

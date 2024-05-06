@@ -1,3 +1,7 @@
+import 'package:calendario_iscte/main.dart';
+import 'package:calendario_iscte/widgets/styled_button.dart';
+import 'package:calendario_iscte/widgets/styled_textfield.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:calendario_iscte/models/models.dart';
@@ -17,14 +21,14 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
   Graph graph = Graph();
   Map<String, Node> nodeList = {};
   SugiyamaConfiguration builder = SugiyamaConfiguration();
+  TextEditingController textFieldController = TextEditingController();
 
   @override
   void didUpdateWidget(covariant ClassGraphViewScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.classes != widget.classes) {
       setState(() {
-        builder = SugiyamaConfiguration();
-        classes = widget.classes;
+        rebuildGraph(widget.classes);
       });
     }
   }
@@ -32,30 +36,58 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
   @override
   void initState() {
     super.initState();
-    classes = widget.classes;
-    subjects = SubjectModel.subjectsFromClassModelsList(classes);
+    rebuildGraph(widget.classes);
+  }
 
+  bool hasOverlap(List<dynamic> list1, List<dynamic> list2) {
+    for (var element in list1) {
+      if (list2.contains(element)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void rebuildGraph(List<ClassModel> newClasses, {String? search}) {
+    print("Rebuilding Graph");
+    builder = SugiyamaConfiguration();
+    classes = newClasses;
+    subjects = SubjectModel.subjectsFromClassModelsList(classes);
+    nodeList.clear();
+    graph = Graph();
+    Map<int, bool> validNeighbour = {};
     int index = 0;
+
 
     for (int i = 0; i < subjects.length - 1; i++) {
       if (hasOverlap(subjects[i].times, subjects[i + 1].times)) {
         MyNodeModel? originNode;
         MyNodeModel? endNode;
+        if(search != null && ((subjects[i].name.contains(search) || subjects[i + 1].name.contains(search)) || (validNeighbour[i] ?? false))){
+          print(subjects[i].name);
+          print(subjects[i + 1].name);
+          validNeighbour.addAll({(i + 1) : true});
+        }else{
+          if(search != null){
+            continue;
+          }
+        }
+        print(i);
         //startNode
-        if (!nodeList.containsKey(subjects[i].name)) {
-          originNode = MyNodeModel(subjects[i].name, subjects[i], index++);
-          nodeList.addAll({subjects[i].name: originNode});
-        } else {
-          originNode = nodeList[subjects[i].name] as MyNodeModel?;
-        }
+          if (!nodeList.containsKey(subjects[i].name)) {
+            originNode = MyNodeModel(subjects[i].name, subjects[i], index++);
+            nodeList.addAll({subjects[i].name: originNode});
+          } else {
+            originNode = nodeList[subjects[i].name] as MyNodeModel?;
+          }
         //endNode
-        if (!nodeList.containsKey(subjects[i + 1].name)) {
-          endNode = MyNodeModel(subjects[i + 1].name, subjects[i + 1], index++);
-          nodeList.addAll({subjects[i + 1].name: endNode});
-        } else {
-          endNode = nodeList[subjects[i + 1].name] as MyNodeModel?;
-        }
-        //print("Edge: ${subjects[i].name} - ${subjects[i+1].name}");
+          if (!nodeList.containsKey(subjects[i + 1].name)) {
+            endNode =
+                MyNodeModel(subjects[i + 1].name, subjects[i + 1], index++);
+            nodeList.addAll({subjects[i + 1].name: endNode});
+          } else {
+            endNode = nodeList[subjects[i + 1].name] as MyNodeModel?;
+          }
         graph.addEdge(originNode!, endNode!);
         graph.addEdge(endNode, originNode);
       }
@@ -68,15 +100,6 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
     builder.coordinateAssignment = CoordinateAssignment.Average;
   }
 
-  bool hasOverlap(List<dynamic> list1, List<dynamic> list2) {
-    for (var element in list1) {
-      if (list2.contains(element)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -84,32 +107,93 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         classes.isEmpty
-            ? const Column(
+            ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Ainda no importou o .csv das Aulas, por favor importe-o "),
+                  const Text(
+                      "Ainda no importou o .csv das Aulas, por favor importe-o "),
+                  SizedBox(
+                    width: 200,
+                    child: StyledButton(
+                        onPressed: () {
+                          setState(() {
+                            rebuildGraph(globalClasses);
+                          });
+                        },
+                        text: "Refresh",
+                        icon: Icons.refresh),
+                  ),
                 ],
               )
             : Expanded(
-                child: InteractiveViewer(
-                  constrained: false,
-                  boundaryMargin: const EdgeInsets.all(10000),
-                  minScale: 0.8,
-                  maxScale: 2.5,
-                  child: GraphView(
-                    graph: graph,
-                    algorithm: SugiyamaAlgorithm(builder),
-                    paint: Paint()
-                      ..color = Colors.black
-                      ..strokeWidth = 2
-                      ..style = PaintingStyle.stroke,
-                    builder: (Node node) {
-                      // I can decide what widget should be shown here based on the id
-                      //var a = node.key!.value as int?;
-                      var myNode = node as MyNodeModel;
-                      return rectangleWidget(myNode.text);
-                    },
-                  ),
+                child: Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    InteractiveViewer(
+                      constrained: false,
+                      boundaryMargin: const EdgeInsets.all(double.infinity),
+                      minScale: 0.8,
+                      maxScale: 2.5,
+                      child: GraphView(
+                        graph: graph,
+                        algorithm: SugiyamaAlgorithm(builder),
+                        paint: Paint()
+                          ..color = Colors.black
+                          ..strokeWidth = 2
+                          ..style = PaintingStyle.stroke,
+                        builder: (Node node) {
+                          // I can decide what widget should be shown here based on the id
+                          //var a = node.key!.value as int?;
+                          var myNode = node as MyNodeModel;
+                          return rectangleWidget(myNode.text);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          StyledTextField(
+                            width: 250,
+                            controller: textFieldController,
+                            color: Colors.indigo,
+                            hintColor: Colors.grey,
+                            hint: "Search...",
+                          ),
+                          StyledButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (textFieldController.text != ""){
+                                    rebuildGraph(globalClasses, search: textFieldController.text);
+                                  }else{
+                                    rebuildGraph(globalClasses);
+                                  }
+                                });
+                              },
+                              text: "Search",
+                              icon: Icons.search),
+                          Expanded(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                StyledButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        rebuildGraph(globalClasses);
+                                      });
+                                    },
+                                    text: "Refresh",
+                                    icon: Icons.refresh),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
       ],
