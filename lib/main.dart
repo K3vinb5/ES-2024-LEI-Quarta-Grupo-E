@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'screens/screens.dart';
-import 'widgets/widgets.dart';
+import 'models/models.dart';
 
 /// The main entry point for the application.
 void main() {
   runApp(const MyApp());
 }
+
+List<ClassModel> globalClasses = [];
+List<ClassRoomModel> globalClassRooms = [];
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -14,6 +17,8 @@ final GlobalKey<NavigatorState> _classesNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'classes');
 final GlobalKey<NavigatorState> _classRoomsNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'classRooms');
+final GlobalKey<NavigatorState> _graphNavigatorKey =
+GlobalKey<NavigatorState>(debugLabel: 'classGraph');
 
 final GoRouter _router = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -59,6 +64,19 @@ final GoRouter _router = GoRouter(
               /*routes: [
 
               ],*/
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          navigatorKey: _graphNavigatorKey,
+          routes: <RouteBase>[
+            GoRoute(
+              // The screen to display as the root in the second tab of the
+              // bottom navigation bar.
+              path: '/classGraph',
+              builder: (BuildContext context, GoRouterState state) =>
+              ClassGraphViewScreen(classes: globalClasses),
             ),
           ],
         ),

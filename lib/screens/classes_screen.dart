@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:calendario_iscte/widgets/input_dialog.dart';
+import 'package:calendario_iscte/main.dart';
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -32,7 +32,7 @@ class ClassesScreen extends StatefulWidget {
 class _ClassesScreenState extends State<ClassesScreen> {
 
   /// List of classes imported by the user.
-  List<ClassModel> aulas = [];
+  List<ClassModel> classes = [];
 
   /// Static list of column names.
   List<String> columnNames = ["Curso", "UC", "Turno", "Turma", "Inscritos", "Dia", "Início", "Fim", "Data", "Características", "Sala", "Semana do \nAno", "Semana do \nSemestre"]; //static data
@@ -51,7 +51,6 @@ class _ClassesScreenState extends State<ClassesScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     visibleColumns = List.filled(columnNames.length, true);
   }
@@ -71,7 +70,8 @@ class _ClassesScreenState extends State<ClassesScreen> {
           const CsvToListConverter(fieldDelimiter: ";").convert(csv);
       list.removeAt(0);
       setState(() {
-        aulas = ClassModel.getClasses(list);
+        classes = ClassModel.getClasses(list);
+        globalClasses = ClassModel.getClasses(list);
       });
     }
   }
@@ -103,7 +103,8 @@ class _ClassesScreenState extends State<ClassesScreen> {
 
           list.removeAt(0);
           setState(() {
-            aulas = ClassModel.getClasses(list);
+            classes = ClassModel.getClasses(list);
+            globalClasses = ClassModel.getClasses(list);
           });
         } else {
           print("Not a CSV");
@@ -123,8 +124,8 @@ class _ClassesScreenState extends State<ClassesScreen> {
     if (outputFile == null) {
       // User canceled the picker
     } else {
-      String csv = ClassModel.toCsv(aulas);
-      File f = File(outputFile!);
+      String csv = ClassModel.toCsv(classes);
+      File f = File(outputFile);
       f.writeAsString(csv);
       final exPath = f.path;
       await File(exPath).create(recursive: true);
@@ -141,8 +142,8 @@ class _ClassesScreenState extends State<ClassesScreen> {
       // User canceled the picker
     } else {
 
-      String json = jsonEncode(aulas);
-      File f = File(outputFile!);
+      String json = jsonEncode(classes);
+      File f = File(outputFile);
       f.writeAsString(json);
       final exPath = f.path;
       await File(exPath).create(recursive: true);
@@ -294,7 +295,6 @@ class _ClassesScreenState extends State<ClassesScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //TODO Review this widget tree
               Expanded(
                 child: Column(
                   children: [
@@ -302,7 +302,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: ClassesPaginatedTable(
-                        aulas: aulas,
+                        aulas: classes,
                         columnNames: columnNames,
                         visibleColumns: visibleColumns,
                         hideColumn: hideColumn,
