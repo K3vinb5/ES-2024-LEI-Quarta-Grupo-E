@@ -16,6 +16,7 @@ class _ScaffoldWithDrawerState extends State<ScaffoldWithDrawer> {
   List<String> screensTitle = [
     "Classes Screen",
     "ClassRooms Screen",
+    "Graph Screen"
   ];
   String currentScreenTitle = "Classes Screen";
 
