@@ -74,8 +74,11 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    visibleColumns = [...List.filled(5, true), ...List.filled(columnNames.length - 5, false)];
-    for(int i = 5; i < columnNames.length; i++){
+    visibleColumns = [
+      ...List.filled(5, true),
+      ...List.filled(columnNames.length - 5, false)
+    ];
+    for (int i = 5; i < columnNames.length; i++) {
       hideColumn(i);
     }
   }
@@ -143,7 +146,7 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     }
   }
 
-  void exportToJSON() async{
+  void exportToJSON() async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Please select an output file:',
       fileName: 'Salas.json',
@@ -152,17 +155,19 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     if (outputFile == null) {
       // User canceled the picker
     } else {
-
       String json = jsonEncode(classRooms);
       File f = File(outputFile);
       f.writeAsString(json);
       final exPath = f.path;
       await File(exPath).create(recursive: true);
-
     }
   }
 
-  void hideColumn(int index){
+  void openSaveDialog(){
+    showDialog(context: context, builder: (context) => SaveFileDialog(onTap1: exportToCSV, onTap2: exportToJSON, title: 'Guardar Ficheiro Salas',),);
+  }
+
+  void hideColumn(int index) {
     setState(() {
       visibleColumns[index] = false;
       hiddenColumnNames.add(columnNames[index]);
@@ -201,92 +206,56 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
               text: "Importar ficheiro online",
               icon: Icons.wifi,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.15,
-              height: MediaQuery.of(context).size.height * 0.04,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.indigo),
-              ),
-              child: DropdownButton(
-                alignment: Alignment.topCenter,
-                focusColor: Colors.white,
-                value: searchLogicDropDownValue,
-                items: const [
-                  DropdownMenuItem(
-                    alignment: Alignment.centerLeft,
-                    value: 0,
-                    child: Text("  Lógica E"),
-                  ),
-                  DropdownMenuItem(
-                    alignment: Alignment.centerLeft,
-                    value: 1,
-                    child: Text("  Lógica OU"),
-                  ),
-                ],
-                onChanged: (index) {
-                  setState(() {
-                    searchLogic = index == 0 ? false : true;
-                    searchLogicDropDownValue = index!;
-                  });
-                },
-              ),
+            StyledDropDown(
+              items: const [
+                Text("  Lógica E"),
+                Text("  Lógica OU"),
+              ],
+              horizontalPadding: 10,
+              onTap: (index) {
+                setState(() {
+                  searchLogic = index == 0 ? false : true;
+                  searchLogicDropDownValue = index;
+                });
+              },
+              width: 200,
             ),
             const SizedBox(
               width: 20,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.15,
-              height: MediaQuery.of(context).size.height * 0.04,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.indigo),
-              ),
-              child: DropdownButton(
-                alignment: Alignment.topCenter,
-                focusColor: Colors.white,
-                value: searchLogicDropDownValue,
-                items: [
-                  ...hiddenColumnNames.mapIndexed((index, columnName) {
-                    return DropdownMenuItem(
-                      value: index,
-                      child: Row(
-                        children: [
-                          Text(
-                            columnName,
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const Icon(Icons.remove_red_eye_outlined),
-                        ],
+            StyledDropDown(
+              items: [
+                ...hiddenColumnNames.mapIndexed((index, columnName) {
+                  return Row(
+                    children: [
+                      Text(
+                        columnName,
                       ),
-                    );
-                  }),
-                ],
-                onChanged: (index) {
-                  setState(() {
-                    visibleColumns[
-                            columnNames.indexOf(hiddenColumnNames[index!])] =
-                        true; //makes column visible again;
-                    hiddenColumnNames.removeAt(index);
-                  });
-                },
-              ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      const Icon(Icons.remove_red_eye_outlined),
+                    ],
+                  );
+                }),
+              ],
+              horizontalPadding: 10,
+              onTap: (index) {
+                setState(() {
+                  visibleColumns[
+                  columnNames.indexOf(hiddenColumnNames[index])] =
+                  true; //makes column visible again;
+                  hiddenColumnNames.removeAt(index);
+                });
+              },
+              width: 200,
             ),
             StyledButton(
               onPressed: () {
-                exportToCSV();
+                openSaveDialog();
               },
-              text: "Gravar alterações para CSV",
-              icon: Icons.download,
-            ),
-            StyledButton(
-              onPressed: () {
-                exportToJSON();
-              },
-              text: "Gravar alterações para JSON",
-              icon: Icons.download,
+              text: "Guardar alterações",
+              width: 200,
             ),
           ],
         ),

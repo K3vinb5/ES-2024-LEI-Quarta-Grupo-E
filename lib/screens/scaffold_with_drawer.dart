@@ -14,11 +14,11 @@ class ScaffoldWithDrawer extends StatefulWidget {
 
 class _ScaffoldWithDrawerState extends State<ScaffoldWithDrawer> {
   List<String> screensTitle = [
-    "Classes Screen",
-    "ClassRooms Screen",
-    "Graph Screen"
+    "Tela Aulas",
+    "Tela Salas",
+    "Tela Grafo"
   ];
-  String currentScreenTitle = "Classes Screen";
+  String currentScreenTitle = "Tela Aulas";
 
   void _onTap(BuildContext context, int index) {
     // When navigating to a new branch, it's recommended to use the goBranch

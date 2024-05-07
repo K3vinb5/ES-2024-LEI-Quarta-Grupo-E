@@ -44,9 +44,6 @@ final GoRouter _router = GoRouter(
               path: '/classes',
               builder: (BuildContext context, GoRouterState state) =>
               const ClassesScreen(),
-              /*routes: [
-
-              ],*/
             ),
           ],
         ),
@@ -61,9 +58,6 @@ final GoRouter _router = GoRouter(
               path: '/classRooms',
               builder: (BuildContext context, GoRouterState state) =>
               const ClassRoomsScreen(),
-              /*routes: [
-
-              ],*/
             ),
           ],
         ),

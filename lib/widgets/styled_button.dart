@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 /// and an optional icon. The button's appearance is defined by the provided text,
 /// icon, and onPressed callback.
 class StyledButton extends StatelessWidget {
-
   /// Creates a styled button.
   ///
   /// The [onPressed], [text], and [icon] parameters are required.
@@ -14,7 +13,8 @@ class StyledButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.text,
-    required this.icon
+    this.icon,
+    this.width,
   });
 
   /// The callback function to be called when the button is pressed.
@@ -24,7 +24,8 @@ class StyledButton extends StatelessWidget {
   final String text;
 
   /// The icon to display on the button (optional).
-  final IconData icon;
+  final IconData? icon;
+  final double? width;
 
   /// Builds the widget tree for this button.
   ///
@@ -33,29 +34,35 @@ class StyledButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 20.0),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.indigo,
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
+      child: SizedBox(
+        height: 45,
+        width: width ?? 280,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.indigo,
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 20,
-              height: 45,
-            ),
-            Icon(
-              icon,
-              color: Colors.indigo,
-            ),
-          ],
+              const SizedBox(
+                width: 20,
+                height: 45,
+              ),
+              icon != null
+                  ? Icon(
+                      icon,
+                      color: Colors.indigo,
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
         ),
       ),
     );

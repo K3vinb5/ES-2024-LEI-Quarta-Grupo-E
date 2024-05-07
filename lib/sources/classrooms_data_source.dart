@@ -91,6 +91,7 @@ class ClassRoomsDataSource extends DataTableSource {
                                   },
                                   text: "Cancel",
                                   icon: Icons.cancel_outlined,
+                                  width: MediaQuery.of(context).size.width * 0.1,
                                 ),
                                 StyledButton(
                                   onPressed: () {
@@ -102,6 +103,7 @@ class ClassRoomsDataSource extends DataTableSource {
                                   },
                                   text: "Confirm",
                                   icon: Icons.check,
+                                  width: MediaQuery.of(context).size.width * 0.1,
                                 ),
                               ],
                             ),

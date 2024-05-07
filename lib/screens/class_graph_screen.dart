@@ -22,6 +22,7 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
   Map<String, Node> nodeList = {};
   SugiyamaConfiguration builder = SugiyamaConfiguration();
   TextEditingController textFieldController = TextEditingController();
+  TransformationController transformationController = TransformationController();
 
   @override
   void didUpdateWidget(covariant ClassGraphViewScreen oldWidget) {
@@ -64,15 +65,12 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
         MyNodeModel? originNode;
         MyNodeModel? endNode;
         if(search != null && ((subjects[i].name.contains(search) || subjects[i + 1].name.contains(search)) || (validNeighbour[i] ?? false))){
-          print(subjects[i].name);
-          print(subjects[i + 1].name);
           validNeighbour.addAll({(i + 1) : true});
         }else{
           if(search != null){
             continue;
           }
         }
-        print(i);
         //startNode
           if (!nodeList.containsKey(subjects[i].name)) {
             originNode = MyNodeModel(subjects[i].name, subjects[i], index++);
@@ -92,7 +90,6 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
         graph.addEdge(endNode, originNode);
       }
     }
-
     builder.nodeSeparation = 10;
     builder.levelSeparation = 30;
     builder.bendPointShape = CurvedBendPointShape(curveLength: 20);
@@ -173,7 +170,9 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
                                 });
                               },
                               text: "Search",
-                              icon: Icons.search),
+                              icon: Icons.search,
+                            width: 150,
+                          ),
                           Expanded(
                             child: Row(
                               mainAxisSize: MainAxisSize.max,

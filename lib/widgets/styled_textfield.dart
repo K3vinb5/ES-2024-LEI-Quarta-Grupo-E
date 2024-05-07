@@ -9,7 +9,9 @@ class StyledTextField extends StatelessWidget {
       required this.color,
       required this.hintColor,
       this.label,
-      required this.hint});
+      this.readOnly,
+      required this.hint,
+      });
 
   final double width;
   final TextEditingController controller;
@@ -18,6 +20,7 @@ class StyledTextField extends StatelessWidget {
   final Color hintColor;
   final String? label;
   final String hint;
+  final bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,7 @@ class StyledTextField extends StatelessWidget {
       width: width,
       height: 48,
       child: TextField(
+        readOnly: readOnly ?? false,
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(
