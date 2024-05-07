@@ -302,7 +302,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: ClassesPaginatedTable(
-                        aulas: classes,
+                        classes: classes,
                         columnNames: columnNames,
                         visibleColumns: visibleColumns,
                         hideColumn: hideColumn,

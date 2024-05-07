@@ -8,15 +8,15 @@ import 'package:calendario_iscte/models/class_room_model.dart';
 /// Returns a [ClassRoomModel] instance with default values for various properties.
 ClassRoomModel buildDefaultClassModel() {
   final classModel = ClassRoomModel(building: "Edificio 2", roomName: "C505",
-  normalCapacity: "40", examCapacity: "20", characteristicsNumber: "1", isAmphitheater: false,
-  isTechSupportForEvents: false, isArq1: false, isArq2: false, isArq3: false,
-  isArq4: false, isArq5: false, isArq6: false, isArq9: false, isBYOD: false,
-  isFocusGroup: false, hasPublicSchedule: false, isFACLab1: false, isFACLab2: false,
-  isBELab: false, isElectronicsLab: false, isComputerLab: false, isJournalismLab: false,
-  isNetworkLab1: false, isNetworkLab2: false, isTelecommunicationsLab: false,
-  isMastersRoom: false, isMastersRoomPlus: false, isNEERoom: false, isExamRoom: false,
-  isReunionRoom: false, isArchitectureRoom: false, isNormalRoom: true, hasVideoconferenceGear: false,
-  isAtrium: false);
+  normalCapacity: "40", examCapacity: "20", characteristicsNumber: "1", isAmphitheater: "",
+  isTechSupportForEvents: "", isArq1: "", isArq2: "", isArq3: "",
+  isArq4: "", isArq5: "", isArq6: "", isArq9: "", isBYOD: "",
+  isFocusGroup: "", hasPublicSchedule: "", isFACLab1: "", isFACLab2: "",
+  isBELab: "", isElectronicsLab: "", isComputerLab: "", isJournalismLab: "",
+  isNetworkLab1: "", isNetworkLab2: "", isTelecommunicationsLab: "",
+  isMastersRoom: "", isMastersRoomPlus: "", isNEERoom: "", isExamRoom: "",
+  isReunionRoom: "", isArchitectureRoom: "", isNormalRoom: "X", hasVideoconferenceGear: "",
+  isAtrium: "");
 
   return classModel;
 }
@@ -95,8 +95,8 @@ void main() {
       expect(classRoomModel.roomName, "C505");
       expect(classRoomModel.normalCapacity, "40");
       expect(classRoomModel.examCapacity, "20");
-      expect(classRoomModel.isNormalRoom, true);
-      expect(classRoomModel.isAtrium, false);
+      expect(classRoomModel.isNormalRoom, "X");
+      expect(classRoomModel.isAtrium, "");
     });
 
     /// Test the conversion of dynamic objects to [ClassRoomModel] instances.
@@ -135,7 +135,7 @@ void main() {
       expect(propertiesList[2], "40");
       expect(propertiesList[3], "20");
       expect(propertiesList[4], "1");
-      expect(propertiesList[34], false);
+      expect(propertiesList[34], "");
     });
 
     /// Test the [toCsv] method by validating the CSV string generated from a list of class models.

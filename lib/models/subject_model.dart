@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'package:calendario_iscte/models/models.dart';
 
 class SubjectModel {

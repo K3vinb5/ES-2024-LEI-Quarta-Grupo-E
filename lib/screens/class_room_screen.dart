@@ -136,7 +136,7 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
       // User canceled the picker
     } else {
       String csv = ClassRoomModel.toCsv(classRooms);
-      File f = File(outputFile!);
+      File f = File(outputFile);
       f.writeAsString(csv);
       final exPath = f.path;
       await File(exPath).create(recursive: true);
@@ -154,7 +154,7 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     } else {
 
       String json = jsonEncode(classRooms);
-      File f = File(outputFile!);
+      File f = File(outputFile);
       f.writeAsString(json);
       final exPath = f.path;
       await File(exPath).create(recursive: true);
