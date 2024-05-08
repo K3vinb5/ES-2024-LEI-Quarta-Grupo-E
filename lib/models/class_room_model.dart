@@ -367,93 +367,93 @@ class ClassRoomModel {
         characteristicsNumber = value;
         break;
       case 5:
-        isAmphitheater = value.isNotEmpty ? "X" : " - ";
+        isAmphitheater = value != " - " ? "X" : " - ";
         break;
       case 6:
-        isTechSupportForEvents = value.isNotEmpty ? "X" : " - ";
+        isTechSupportForEvents = value != " - " ? "X" : " - ";
         break;
       case 7:
-        isArq1 = value.isNotEmpty ? "X" : " - ";
+        isArq1 = value != " - " ? "X" : " - ";
         break;
       case 8:
-        isArq2 = value.isNotEmpty ? "X" : " - ";
+        isArq2 = value != " - " ? "X" : " - ";
         break;
       case 9:
-        isArq3 = value.isNotEmpty ? "X" : " - ";
+        isArq3 = value != " - " ? "X" : " - ";
         break;
       case 10:
-        isArq4 = value.isNotEmpty ? "X" : " - ";
+        isArq4 = value != " - " ? "X" : " - ";
         break;
       case 11:
-        isArq5 = value.isNotEmpty ? "X" : " - ";
+        isArq5 = value != " - " ? "X" : " - ";
         break;
       case 12:
-        isArq6 = value.isNotEmpty ? "X" : " - ";
+        isArq6 = value != " - " ? "X" : " - ";
         break;
       case 13:
-        isArq9 = value.isNotEmpty ? "X" : " - ";
+        isArq9 = value != " - " ? "X" : " - ";
         break;
       case 14:
-        isBYOD = value.isNotEmpty ? "X" : " - ";
+        isBYOD = value != " - " ? "X" : " - ";
         break;
       case 15:
-        isFocusGroup = value.isNotEmpty ? "X" : " - ";
+        isFocusGroup = value != " - " ? "X" : " - ";
         break;
       case 16:
-        hasPublicSchedule = value.isNotEmpty ? "X" : " - ";
+        hasPublicSchedule = value != " - " ? "X" : " - ";
         break;
       case 17:
-        isFACLab1 = value.isNotEmpty ? "X" : " - ";
+        isFACLab1 = value != " - " ? "X" : " - ";
         break;
       case 18:
-        isFACLab2 = value.isNotEmpty ? "X" : " - ";
+        isFACLab2 = value != " - " ? "X" : " - ";
       case 19:
-        isBELab = value.isNotEmpty ? "X" : " - ";
+        isBELab = value != " - " ? "X" : " - ";
         break;
       case 20:
-        isElectronicsLab = value.isNotEmpty ? "X" : " - ";
+        isElectronicsLab = value != " - " ? "X" : " - ";
         break;
       case 21:
-        isComputerLab = value.isNotEmpty ? "X" : " - ";
+        isComputerLab = value != " - " ? "X" : " - ";
         break;
       case 22:
-        isJournalismLab = value.isNotEmpty ? "X" : " - ";
+        isJournalismLab = value != " - " ? "X" : " - ";
         break;
       case 23:
-        isNetworkLab1 = value.isNotEmpty ? "X" : " - ";
+        isNetworkLab1 = value != " - " ? "X" : " - ";
         break;
       case 24:
-        isNetworkLab2 = value.isNotEmpty ? "X" : " - ";
+        isNetworkLab2 = value != " - " ? "X" : " - ";
         break;
       case 25:
-        isTelecommunicationsLab = value.isNotEmpty ? "X" : " - ";
+        isTelecommunicationsLab = value != " - " ? "X" : " - ";
         break;
       case 26:
-        isMastersRoom = value.isNotEmpty ? "X" : " - ";
+        isMastersRoom = value != " - " ? "X" : " - ";
         break;
       case 27:
-        isMastersRoomPlus = value.isNotEmpty ? "X" : " - ";
+        isMastersRoomPlus = value != " - " ? "X" : " - ";
         break;
       case 28:
-        isNEERoom = value.isNotEmpty ? "X" : " - ";
+        isNEERoom = value != " - " ? "X" : " - ";
         break;
       case 29:
-        isExamRoom = value.isNotEmpty ? "X" : " - ";
+        isExamRoom = value != " - " ? "X" : " - ";
         break;
       case 30:
-        isReunionRoom = value.isNotEmpty ? "X" : " - ";
+        isReunionRoom = value != " - " ? "X" : " - ";
         break;
       case 31:
-        isArchitectureRoom = value.isNotEmpty ? "X" : " - ";
+        isArchitectureRoom = value != " - " ? "X" : " - ";
         break;
       case 32:
-        isNormalRoom = value.isNotEmpty ? "X" : " - ";
+        isNormalRoom = value != " - " ? "X" : " - ";
         break;
       case 33:
-        hasVideoconferenceGear = value.isNotEmpty ? "X" : " - ";
+        hasVideoconferenceGear = value != " - " ? "X" : " - ";
         break;
       case 34:
-        isAtrium = value.isNotEmpty ? "X" : " - ";
+        isAtrium = value != " - " ? "X" : " - ";
         break;
     }
   }

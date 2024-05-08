@@ -1,7 +1,6 @@
 import 'package:calendario_iscte/main.dart';
-import 'package:calendario_iscte/widgets/styled_button.dart';
-import 'package:calendario_iscte/widgets/styled_textfield.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:calendario_iscte/widgets/style/styled_button.dart';
+import 'package:calendario_iscte/widgets/style/styled_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:calendario_iscte/models/models.dart';
@@ -12,7 +11,7 @@ class ClassGraphViewScreen extends StatefulWidget {
   final List<ClassModel> classes;
 
   @override
-  _ClassGraphViewScreenState createState() => _ClassGraphViewScreenState();
+  State<ClassGraphViewScreen> createState() => _ClassGraphViewScreenState();
 }
 
 class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
@@ -50,7 +49,6 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
   }
 
   void rebuildGraph(List<ClassModel> newClasses, {String? search}) {
-    print("Rebuilding Graph");
     builder = SugiyamaConfiguration();
     classes = newClasses;
     subjects = SubjectModel.subjectsFromClassModelsList(classes);
@@ -156,6 +154,7 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
                             width: 250,
                             controller: textFieldController,
                             color: Colors.indigo,
+                            textColor: Colors.black,
                             hintColor: Colors.grey,
                             hint: "Search...",
                           ),

@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:calendario_iscte/main.dart';
+import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:csv/csv.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:calendario_iscte/main.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 import 'package:calendario_iscte/models/models.dart';
+import 'package:calendario_iscte/dialogs/dialogs.dart';
 import 'package:collection/collection.dart';
 
 class ClassRoomsScreen extends StatefulWidget {
@@ -121,11 +122,11 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
             globalClassRooms = ClassRoomModel.getClassRooms(list);
           });
         } else {
-          print("Not a CSV");
+          noCsvDialog();
         }
       }
-    } catch (e) {
-      print(e);
+    } catch (_) {
+      noCsvDialog();
     }
   }
 
@@ -161,6 +162,10 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
       final exPath = f.path;
       await File(exPath).create(recursive: true);
     }
+  }
+
+  void noCsvDialog(){
+    showDialog(context: context, builder: (context) => const AlertDialog(title: Text("Not a csv")),);
   }
 
   void openSaveDialog(){
@@ -219,6 +224,7 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
                 });
               },
               width: 200,
+              changeValue: true,
             ),
             const SizedBox(
               width: 20,

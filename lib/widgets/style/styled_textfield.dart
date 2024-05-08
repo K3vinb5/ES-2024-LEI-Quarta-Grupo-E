@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 class StyledTextField extends StatelessWidget {
   const StyledTextField(
       {super.key,
-      required this.width,
       required this.controller,
-      this.onChanged,
+      required this.width,
+      required this.hint,
       required this.color,
       required this.hintColor,
+      this.textColor,
+      this.onChanged,
       this.label,
       this.readOnly,
-      required this.hint,
       });
 
-  final double width;
   final TextEditingController controller;
-  final void Function(String)? onChanged;
+  final double width;
+  final String hint;
   final Color color;
   final Color hintColor;
+  final Color? textColor;
+  final void Function(String)? onChanged;
   final String? label;
-  final String hint;
   final bool? readOnly;
 
   @override
@@ -52,7 +54,7 @@ class StyledTextField extends StatelessWidget {
         ),
         cursorColor: color,
         style: TextStyle(
-          color: color,
+          color: textColor ?? color,
         ),
       ),
     );

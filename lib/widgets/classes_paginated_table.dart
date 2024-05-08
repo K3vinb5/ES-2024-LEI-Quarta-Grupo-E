@@ -146,7 +146,6 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
       funcList.addAll({index.toString(): comparatorFunc});
     }
 
-    print(funcList);
     List<ClassModel> newCurrentAulas = List.from(widget.classes);
     //print(newCurrentAulas.length);
     for (var comparatorFunc in funcList.entries) {

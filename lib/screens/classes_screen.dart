@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 import 'package:calendario_iscte/models/models.dart';
+import 'package:calendario_iscte/dialogs/dialogs.dart';
 
 /// Represents the main screen of the application.
 ///
@@ -120,11 +121,11 @@ class _ClassesScreenState extends State<ClassesScreen> {
             globalClasses = ClassModel.getClasses(list);
           });
         } else {
-          print("Not a CSV");
+          noCsvDialog();
         }
       }
-    } catch (e) {
-      print(e);
+    } catch (_) {
+      noCsvDialog();
     }
   }
 
@@ -160,6 +161,10 @@ class _ClassesScreenState extends State<ClassesScreen> {
       final exPath = f.path;
       await File(exPath).create(recursive: true);
     }
+  }
+
+  void noCsvDialog(){
+    showDialog(context: context, builder: (context) => const AlertDialog(title: Text("Not a csv")),);
   }
 
   void openSaveDialog(){
@@ -236,6 +241,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
                   searchLogicDropDownValue = index;
                 });
               },
+              changeValue: true,
               width: 200,
             ),
             const SizedBox(

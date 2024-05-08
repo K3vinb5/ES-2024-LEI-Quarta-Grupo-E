@@ -1,5 +1,4 @@
-import 'package:calendario_iscte/widgets/styled_button.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:calendario_iscte/widgets/style/styled_button.dart';
 import 'package:flutter/material.dart';
 
 class SaveFileDialog extends StatelessWidget {

@@ -35,7 +35,7 @@ class SubjectModel {
 
   @override
   String toString() {
-    return "${name} ${times}\n";
+    return "$name $times\n";
   }
 
 }

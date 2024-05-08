@@ -1,12 +1,9 @@
-export 'sort_icon.dart';
-export 'styled_textfield.dart';
-export 'styled_button.dart';
-export 'styled_dropdown.dart';
+export 'style/styled_textfield.dart';
+export 'style/styled_button.dart';
+export 'style/styled_dropdown.dart';
+export 'style/sort_icon.dart';
 export 'drawer_title.dart';
 export 'drawer_component.dart';
 export 'my_data_column.dart';
 export 'classes_paginated_table.dart';
 export 'classrooms_paginated_table.dart';
-export 'class_appoinment_dialog.dart';
-export 'input_dialog.dart';
-export 'save_dialog.dart';
