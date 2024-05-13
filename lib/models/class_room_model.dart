@@ -160,36 +160,36 @@ class ClassRoomModel {
     normalCapacity = list[2].toString();
     examCapacity = list[3].toString();
     characteristicsNumber = list[4].toString();
-    isAmphitheater = list[5].toString();
-    isTechSupportForEvents = list[6].toString();
-    isArq1 = list[7].toString();
-    isArq2 = list[8].toString();
-    isArq3 = list[9].toString();
-    isArq4 = list[10].toString();
-    isArq5 = list[11].toString();
-    isArq6 = list[12].toString();
-    isArq9 = list[13].toString();
-    isBYOD = list[14].toString();
-    isFocusGroup = list[15].toString();
-    hasPublicSchedule = list[16].toString();
-    isFACLab1 = list[17].toString();
-    isFACLab2 = list[18].toString();
-    isBELab = list[19].toString();
-    isElectronicsLab = list[20].toString();
-    isComputerLab = list[21].toString();
-    isJournalismLab = list[22].toString();
-    isNetworkLab1 = list[23].toString();
-    isNetworkLab2 = list[24].toString();
-    isTelecommunicationsLab = list[25].toString();
-    isMastersRoom = list[26].toString();
-    isMastersRoomPlus = list[27].toString();
-    isNEERoom = list[28].toString();
-    isExamRoom = list[29].toString();
-    isReunionRoom = list[30].toString();
-    isArchitectureRoom = list[31].toString();
-    isNormalRoom = list[32].toString();
-    hasVideoconferenceGear = list[33].toString();
-    isAtrium = list[34].toString();
+    isAmphitheater = list[5].toString().isNotEmpty ? "X" : " - ";
+    isTechSupportForEvents = list[6].toString().isNotEmpty ? "X" : " - ";
+    isArq1 = list[7].toString().isNotEmpty ? "X" : " - ";
+    isArq2 = list[8].toString().isNotEmpty ? "X" : " - ";
+    isArq3 = list[9].toString().isNotEmpty ? "X" : " - ";
+    isArq4 = list[10].toString().isNotEmpty ? "X" : " - ";
+    isArq5 = list[11].toString().isNotEmpty ? "X" : " - ";
+    isArq6 = list[12].toString().isNotEmpty ? "X" : " - ";
+    isArq9 = list[13].toString().isNotEmpty ? "X" : " - ";
+    isBYOD = list[14].toString().isNotEmpty ? "X" : " - ";
+    isFocusGroup = list[15].toString().isNotEmpty ? "X" : " - ";
+    hasPublicSchedule = list[16].toString().isNotEmpty ? "X" : " - ";
+    isFACLab1 = list[17].toString().isNotEmpty ? "X" : " - ";
+    isFACLab2 = list[18].toString().isNotEmpty ? "X" : " - ";
+    isBELab = list[19].toString().isNotEmpty ? "X" : " - ";
+    isElectronicsLab = list[20].toString().isNotEmpty ? "X" : " - ";
+    isComputerLab = list[21].toString().isNotEmpty ? "X" : " - ";
+    isJournalismLab = list[22].toString().isNotEmpty ? "X" : " - ";
+    isNetworkLab1 = list[23].toString().isNotEmpty ? "X" : " - ";
+    isNetworkLab2 = list[24].toString().isNotEmpty ? "X" : " - ";
+    isTelecommunicationsLab = list[25].toString().isNotEmpty ? "X" : " - ";
+    isMastersRoom = list[26].toString().isNotEmpty ? "X" : " - ";
+    isMastersRoomPlus = list[27].toString().isNotEmpty ? "X" : " - ";
+    isNEERoom = list[28].toString().isNotEmpty ? "X" : " - ";
+    isExamRoom = list[29].toString().isNotEmpty ? "X" : " - ";
+    isReunionRoom = list[30].toString().isNotEmpty ? "X" : " - ";
+    isArchitectureRoom = list[31].toString().isNotEmpty ? "X" : " - ";
+    isNormalRoom = list[32].toString().isNotEmpty ? "X" : " - ";
+    hasVideoconferenceGear = list[33].toString().isNotEmpty ? "X" : " - ";
+    isAtrium = list[34].toString().isNotEmpty ? "X" : " - ";
   }
 
   /// Converts a list of lists of dynamic objects (csv representation) into a
@@ -367,93 +367,93 @@ class ClassRoomModel {
         characteristicsNumber = value;
         break;
       case 5:
-        isAmphitheater = value.isNotEmpty ? "X" : "";
+        isAmphitheater = value != " - " ? "X" : " - ";
         break;
       case 6:
-        isTechSupportForEvents = value.isNotEmpty ? "X" : "";
+        isTechSupportForEvents = value != " - " ? "X" : " - ";
         break;
       case 7:
-        isArq1 = value.isNotEmpty ? "X" : "";
+        isArq1 = value != " - " ? "X" : " - ";
         break;
       case 8:
-        isArq2 = value.isNotEmpty ? "X" : "";
+        isArq2 = value != " - " ? "X" : " - ";
         break;
       case 9:
-        isArq3 = value.isNotEmpty ? "X" : "";
+        isArq3 = value != " - " ? "X" : " - ";
         break;
       case 10:
-        isArq4 = value.isNotEmpty ? "X" : "";
+        isArq4 = value != " - " ? "X" : " - ";
         break;
       case 11:
-        isArq5 = value.isNotEmpty ? "X" : "";
+        isArq5 = value != " - " ? "X" : " - ";
         break;
       case 12:
-        isArq6 = value.isNotEmpty ? "X" : "";
+        isArq6 = value != " - " ? "X" : " - ";
         break;
       case 13:
-        isArq9 = value.isNotEmpty ? "X" : "";
+        isArq9 = value != " - " ? "X" : " - ";
         break;
       case 14:
-        isBYOD = value.isNotEmpty ? "X" : "";
+        isBYOD = value != " - " ? "X" : " - ";
         break;
       case 15:
-        isFocusGroup = value.isNotEmpty ? "X" : "";
+        isFocusGroup = value != " - " ? "X" : " - ";
         break;
       case 16:
-        hasPublicSchedule = value.isNotEmpty ? "X" : "";
+        hasPublicSchedule = value != " - " ? "X" : " - ";
         break;
       case 17:
-        isFACLab1 = value.isNotEmpty ? "X" : "";
+        isFACLab1 = value != " - " ? "X" : " - ";
         break;
       case 18:
-        isFACLab2 = value.isNotEmpty ? "X" : "";
+        isFACLab2 = value != " - " ? "X" : " - ";
       case 19:
-        isBELab = value.isNotEmpty ? "X" : "";
+        isBELab = value != " - " ? "X" : " - ";
         break;
       case 20:
-        isElectronicsLab = value.isNotEmpty ? "X" : "";
+        isElectronicsLab = value != " - " ? "X" : " - ";
         break;
       case 21:
-        isComputerLab = value.isNotEmpty ? "X" : "";
+        isComputerLab = value != " - " ? "X" : " - ";
         break;
       case 22:
-        isJournalismLab = value.isNotEmpty ? "X" : "";
+        isJournalismLab = value != " - " ? "X" : " - ";
         break;
       case 23:
-        isNetworkLab1 = value.isNotEmpty ? "X" : "";
+        isNetworkLab1 = value != " - " ? "X" : " - ";
         break;
       case 24:
-        isNetworkLab2 = value.isNotEmpty ? "X" : "";
+        isNetworkLab2 = value != " - " ? "X" : " - ";
         break;
       case 25:
-        isTelecommunicationsLab = value.isNotEmpty ? "X" : "";
+        isTelecommunicationsLab = value != " - " ? "X" : " - ";
         break;
       case 26:
-        isMastersRoom = value.isNotEmpty ? "X" : "";
+        isMastersRoom = value != " - " ? "X" : " - ";
         break;
       case 27:
-        isMastersRoomPlus = value.isNotEmpty ? "X" : "";
+        isMastersRoomPlus = value != " - " ? "X" : " - ";
         break;
       case 28:
-        isNEERoom = value.isNotEmpty ? "X" : "";
+        isNEERoom = value != " - " ? "X" : " - ";
         break;
       case 29:
-        isExamRoom = value.isNotEmpty ? "X" : "";
+        isExamRoom = value != " - " ? "X" : " - ";
         break;
       case 30:
-        isReunionRoom = value.isNotEmpty ? "X" : "";
+        isReunionRoom = value != " - " ? "X" : " - ";
         break;
       case 31:
-        isArchitectureRoom = value.isNotEmpty ? "X" : "";
+        isArchitectureRoom = value != " - " ? "X" : " - ";
         break;
       case 32:
-        isNormalRoom = value.isNotEmpty ? "X" : "";
+        isNormalRoom = value != " - " ? "X" : " - ";
         break;
       case 33:
-        hasVideoconferenceGear = value.isNotEmpty ? "X" : "";
+        hasVideoconferenceGear = value != " - " ? "X" : " - ";
         break;
       case 34:
-        isAtrium = value.isNotEmpty ? "X" : "";
+        isAtrium = value != " - " ? "X" : " - ";
         break;
     }
   }

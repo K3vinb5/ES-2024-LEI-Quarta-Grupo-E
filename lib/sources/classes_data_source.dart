@@ -1,5 +1,4 @@
-import 'package:calendario_iscte/widgets/styled_button.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:calendario_iscte/widgets/style/styled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/models/models.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -73,7 +72,7 @@ class ClassesDataSource extends DataTableSource {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text("Edit Value"),
+                      title: const Text("Edit Value"),
                       backgroundColor: const Color.fromARGB(255, 197,223,243),
                       content: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.22,
@@ -95,6 +94,7 @@ class ClassesDataSource extends DataTableSource {
                                   },
                                   text: "Cancel",
                                   icon: Icons.cancel_outlined,
+                                  width: MediaQuery.of(context).size.width * 0.1,
                                 ),
                                 StyledButton(
                                   onPressed: () {
@@ -106,6 +106,7 @@ class ClassesDataSource extends DataTableSource {
                                   },
                                   text: "Confirm",
                                   icon: Icons.check,
+                                  width: MediaQuery.of(context).size.width * 0.1,
                                 ),
                               ],
                             ),

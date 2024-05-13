@@ -1,7 +1,7 @@
 import 'package:calendario_iscte/main.dart';
-import 'package:calendario_iscte/widgets/styled_button.dart';
-import 'package:calendario_iscte/widgets/styled_textfield.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:calendario_iscte/widgets/style/styled_button.dart';
+import 'package:calendario_iscte/widgets/style/styled_textfield.dart';
+
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:calendario_iscte/models/models.dart';
@@ -12,7 +12,7 @@ class ClassGraphViewScreen extends StatefulWidget {
   final List<ClassModel> classes;
 
   @override
-  _ClassGraphViewScreenState createState() => _ClassGraphViewScreenState();
+  State<ClassGraphViewScreen> createState() => _ClassGraphViewScreenState();
 }
 
 class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
@@ -22,7 +22,7 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
   Map<String, Node> nodeList = {};
   SugiyamaConfiguration builder = SugiyamaConfiguration();
   TextEditingController textFieldController = TextEditingController();
-
+  TransformationController transformationController = TransformationController();
   @override
   void didUpdateWidget(covariant ClassGraphViewScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -49,7 +49,6 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
   }
 
   void rebuildGraph(List<ClassModel> newClasses, {String? search}) {
-    print("Rebuilding Graph");
     builder = SugiyamaConfiguration();
     classes = newClasses;
     subjects = SubjectModel.subjectsFromClassModelsList(classes);
@@ -64,15 +63,12 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
         MyNodeModel? originNode;
         MyNodeModel? endNode;
         if(search != null && ((subjects[i].name.contains(search) || subjects[i + 1].name.contains(search)) || (validNeighbour[i] ?? false))){
-          print(subjects[i].name);
-          print(subjects[i + 1].name);
           validNeighbour.addAll({(i + 1) : true});
         }else{
           if(search != null){
             continue;
           }
         }
-        print(i);
         //startNode
           if (!nodeList.containsKey(subjects[i].name)) {
             originNode = MyNodeModel(subjects[i].name, subjects[i], index++);
@@ -92,7 +88,6 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
         graph.addEdge(endNode, originNode);
       }
     }
-
     builder.nodeSeparation = 10;
     builder.levelSeparation = 30;
     builder.bendPointShape = CurvedBendPointShape(curveLength: 20);
@@ -159,6 +154,7 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
                             width: 250,
                             controller: textFieldController,
                             color: Colors.indigo,
+                            textColor: Colors.black,
                             hintColor: Colors.grey,
                             hint: "Search...",
                           ),
@@ -173,7 +169,10 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
                                 });
                               },
                               text: "Search",
-                              icon: Icons.search),
+
+                              icon: Icons.search,
+                            width: 150,
+                          ),
                           Expanded(
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
