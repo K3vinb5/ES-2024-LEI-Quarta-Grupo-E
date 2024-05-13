@@ -19,6 +19,8 @@ final GlobalKey<NavigatorState> _classRoomsNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'classRooms');
 final GlobalKey<NavigatorState> _graphNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'classGraph');
+final GlobalKey<NavigatorState> _occupationNavigationKey =
+GlobalKey<NavigatorState>(debugLabel: 'classRoomsOccupation');
 
 final GoRouter _router = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -71,6 +73,19 @@ final GoRouter _router = GoRouter(
               path: '/classGraph',
               builder: (BuildContext context, GoRouterState state) =>
               ClassGraphViewScreen(classes: globalClasses),
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          navigatorKey: _occupationNavigationKey,
+          routes: <RouteBase>[
+            GoRoute(
+              // The screen to display as the root in the second tab of the
+              // bottom navigation bar.
+              path: '/classRoomOccupation',
+              builder: (BuildContext context, GoRouterState state) =>
+              ClassroomOcupationScreen(classRooms: globalClassRooms,),
             ),
           ],
         ),

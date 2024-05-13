@@ -14,9 +14,10 @@ class ScaffoldWithDrawer extends StatefulWidget {
 
 class _ScaffoldWithDrawerState extends State<ScaffoldWithDrawer> {
   List<String> screensTitle = [
-    "Tela Aulas",
-    "Tela Salas",
-    "Tela Grafo"
+    "Ecrã Aulas",
+    "Ecrã Salas",
+    "Ecrã Grafo",
+    "Ecrã Ocupação"
   ];
   String currentScreenTitle = "Tela Aulas";
 
