@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20), // Spacer
           // Description Widget
           const Text(
-            'This is a sample Flutter app homepage with a title and description.',
+            'Nesta aplicação é possível visualizar horários e estatísticas de salas através da importação de ficheiros, é possível também ver um grafo para visualização de conflictualidade entre aulas',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18),
           ),
