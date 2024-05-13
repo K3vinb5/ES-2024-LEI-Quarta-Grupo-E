@@ -1,7 +1,6 @@
 import 'package:calendario_iscte/main.dart';
 import 'package:calendario_iscte/widgets/style/styled_button.dart';
 import 'package:calendario_iscte/widgets/style/styled_textfield.dart';
-
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:calendario_iscte/models/models.dart';
@@ -23,6 +22,7 @@ class _ClassGraphViewScreenState extends State<ClassGraphViewScreen> {
   SugiyamaConfiguration builder = SugiyamaConfiguration();
   TextEditingController textFieldController = TextEditingController();
   TransformationController transformationController = TransformationController();
+
   @override
   void didUpdateWidget(covariant ClassGraphViewScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
