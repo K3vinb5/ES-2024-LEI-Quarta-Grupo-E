@@ -1,3 +1,4 @@
+import 'package:calendario_iscte/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'screens/screens.dart';
@@ -21,10 +22,12 @@ final GlobalKey<NavigatorState> _graphNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'classGraph');
 final GlobalKey<NavigatorState> _occupationNavigationKey =
 GlobalKey<NavigatorState>(debugLabel: 'classRoomsOccupation');
+final GlobalKey<NavigatorState> _homeNavigationKey =
+GlobalKey<NavigatorState>(debugLabel: 'home');
 
 final GoRouter _router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/classes',
+  initialLocation: '/home',
   routes: <RouteBase>[
     StatefulShellRoute.indexedStack(
       builder: (BuildContext context, GoRouterState state,
@@ -37,6 +40,18 @@ final GoRouter _router = GoRouter(
       },
       branches: <StatefulShellBranch>[
         // The route branch for the first tab of the bottom navigation bar.
+        StatefulShellBranch(
+          navigatorKey: _homeNavigationKey,
+          routes: <RouteBase>[
+            GoRoute(
+              // The screen to display as the root in the first tab of the
+              // bottom navigation bar.
+              path: '/home',
+              builder: (BuildContext context, GoRouterState state) =>
+              const HomeScreen(),
+            ),
+          ],
+        ),
         StatefulShellBranch(
           navigatorKey: _classesNavigatorKey,
           routes: <RouteBase>[
