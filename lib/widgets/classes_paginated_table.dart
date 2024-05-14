@@ -1,3 +1,4 @@
+import 'package:calendario_iscte/main.dart';
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/models/models.dart';
 import 'package:calendario_iscte/sources/sources.dart';
@@ -14,14 +15,14 @@ class ClassesPaginatedTable extends StatefulWidget {
   /// Creates a paginated table widget for displaying classes.
   ///
   /// The [key] parameter is an optional key to identify this widget.
-  /// The [aulas] parameter is the list of classes to display.
+  /// The [classes] parameter is the list of classes to display.
   /// The [columnNames] parameter is the list of column names for the table.
   /// The [visibleColumns] parameter is a list indicating the visibility of columns.
   /// The [hideColumn] parameter is a callback function to hide a column.
   /// The [searchLogic] parameter specifies the search logic to use.
   const ClassesPaginatedTable({
     super.key,
-    required this.aulas,
+    required this.classes,
     required this.columnNames,
     required this.searchLogic,
     required this.visibleColumns,
@@ -29,7 +30,7 @@ class ClassesPaginatedTable extends StatefulWidget {
   });
 
   /// The list of classes (aulas) to display.
-  final List<ClassModel> aulas;
+  final List<ClassModel> classes;
 
   /// The list of column names for the table.
   final List<String> columnNames;
@@ -56,7 +57,7 @@ class ClassesPaginatedTable extends StatefulWidget {
 class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
 
   /// The current list of classes displayed in the table.
-  late List<ClassModel> currentAulas;
+  late List<ClassModel> currentClasses;
 
   /// List indicating whether each column is sorted in ascending order
   late List<bool> ascending;
@@ -80,7 +81,7 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
   ///
   /// Initializes [searchLogic] and [visibleColumns] based on the widget's properties.
   /// Sets [ascending] and [active] lists, with the first column being active by default.
-  /// Sets [currentAulas] to the list of classes provided by the widget.
+  /// Sets [currentClasses] to the list of classes provided by the widget.
   @override
   void initState() {
     super.initState();
@@ -91,7 +92,7 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
     active = List.filled(widget.columnNames.length, false);
     active[0] = true;
     setState(() {
-      currentAulas = widget.aulas;
+      currentClasses = widget.classes;
     });
   }
 
@@ -107,16 +108,16 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
   void didUpdateWidget(covariant ClassesPaginatedTable oldWidget) {
     super.didUpdateWidget(oldWidget);
     //aulas
-    if (oldWidget.aulas != widget.aulas) {
+    if (oldWidget.classes != widget.classes) {
       setState(() {
-        currentAulas = widget.aulas;
+        currentClasses = widget.classes;
       });
     }
     //search logic (E and OU logic)
     if (oldWidget.searchLogic != widget.searchLogic) {
       setState(() {
         searchLogic = widget.searchLogic;
-        currentAulas = widget.aulas;
+        currentClasses = widget.classes;
       });
     }
     //resets based on dropdown in screen
@@ -144,16 +145,14 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
       funcList.remove(index.toString());
       funcList.addAll({index.toString(): comparatorFunc});
     }
-
-    print(funcList);
-    List<ClassModel> newCurrentAulas = List.from(widget.aulas);
+    List<ClassModel> newCurrentAulas = List.from(widget.classes);
     //print(newCurrentAulas.length);
     for (var comparatorFunc in funcList.entries) {
       newCurrentAulas.removeWhere(comparatorFunc.value);
       //print(newCurrentAulas.length);
     }
     setState(() {
-      currentAulas = newCurrentAulas;
+      currentClasses = newCurrentAulas;
     });
   }
 
@@ -175,12 +174,12 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
     }
     List<ClassModel> newCurrentAulas = [];
     for (var comparatorFunc in funcList.entries) {
-      List<ClassModel> tempList = List.from(widget.aulas);
+      List<ClassModel> tempList = List.from(widget.classes);
       tempList.removeWhere(comparatorFunc.value);
       newCurrentAulas.addAll(tempList);
     }
     setState(() {
-      currentAulas = newCurrentAulas.toSet().toList(); //remove duplicates
+      currentClasses = newCurrentAulas.toSet().toList(); //remove duplicates
     });
   }
 
@@ -200,7 +199,7 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
       }
       active[index] = true;
       ascending[index] = !ascending[index];
-      currentAulas.sort((a, b) {
+      currentClasses.sort((a, b) {
         if (ascending[index]) {
           return compareTo(a, b);
         } else {
@@ -275,10 +274,11 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
         updateState: (change) {
           setState(() {
             change();
+            globalClasses = currentClasses;
           });
         },
         context: context,
-        classes: currentAulas,
+        classes: currentClasses,
         visibleColumns: visibleColumns,
       ),
     );

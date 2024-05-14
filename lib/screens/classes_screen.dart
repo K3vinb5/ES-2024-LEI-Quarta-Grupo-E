@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:calendario_iscte/widgets/input_dialog.dart';
+import 'package:calendario_iscte/main.dart';
 import 'package:collection/collection.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -8,13 +8,13 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 import 'package:calendario_iscte/models/models.dart';
+import 'package:calendario_iscte/dialogs/dialogs.dart';
 
 /// Represents the main screen of the application.
 ///
 /// This widget serves as the main screen of the application. It's a stateful widget
 /// that can hold mutable state and can be rebuilt when the state changes.
 class ClassesScreen extends StatefulWidget {
-
   /// Creates the main screen widget.
   ///
   /// The [key] parameter is an optional key to identify this widget.
@@ -30,12 +30,25 @@ class ClassesScreen extends StatefulWidget {
 /// It contains lists of classes, column names, and other properties necessary
 /// for rendering the user interface.
 class _ClassesScreenState extends State<ClassesScreen> {
-
   /// List of classes imported by the user.
-  List<ClassModel> aulas = [];
+  List<ClassModel> classes = [];
 
   /// Static list of column names.
-  List<String> columnNames = ["Curso", "UC", "Turno", "Turma", "Inscritos", "Dia", "Início", "Fim", "Data", "Características", "Sala", "Semana do \nAno", "Semana do \nSemestre"]; //static data
+  List<String> columnNames = [
+    "Curso",
+    "UC",
+    "Turno",
+    "Turma",
+    "Inscritos",
+    "Dia",
+    "Início",
+    "Fim",
+    "Data",
+    "Características",
+    "Sala",
+    "Semana do \nAno",
+    "Semana do \nSemestre"
+  ]; //static data
 
   /// List of boolean values indicating the visibility of columns.
   late List<bool> visibleColumns = [];
@@ -51,7 +64,6 @@ class _ClassesScreenState extends State<ClassesScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     visibleColumns = List.filled(columnNames.length, true);
   }
@@ -71,7 +83,8 @@ class _ClassesScreenState extends State<ClassesScreen> {
           const CsvToListConverter(fieldDelimiter: ";").convert(csv);
       list.removeAt(0);
       setState(() {
-        aulas = ClassModel.getClasses(list);
+        classes = ClassModel.getClasses(list);
+        globalClasses = ClassModel.getClasses(list);
       });
     }
   }
@@ -92,25 +105,27 @@ class _ClassesScreenState extends State<ClassesScreen> {
     try {
       final response = await http.get(Uri.parse(url));
 
-      if(response.statusCode == 200) { // Status code OK
+      if (response.statusCode == 200) {
+        // Status code OK
         String? contentType = response.headers['content-type'];
 
-        if(contentType?.toLowerCase().contains('text/csv') ?? false) {
+        if (contentType?.toLowerCase().contains('text/csv') ?? false) {
           String csv = utf8.decode(response.body.runes.toList());
 
           List<List<dynamic>> list =
-          const CsvToListConverter(fieldDelimiter: ";").convert(csv);
+              const CsvToListConverter(fieldDelimiter: ";").convert(csv);
 
           list.removeAt(0);
           setState(() {
-            aulas = ClassModel.getClasses(list);
+            classes = ClassModel.getClasses(list);
+            globalClasses = ClassModel.getClasses(list);
           });
         } else {
-          print("Not a CSV");
+          noCsvDialog();
         }
       }
-    } catch (e) {
-      print(e);
+    } catch (_) {
+      noCsvDialog();
     }
   }
 
@@ -123,15 +138,15 @@ class _ClassesScreenState extends State<ClassesScreen> {
     if (outputFile == null) {
       // User canceled the picker
     } else {
-      String csv = ClassModel.toCsv(aulas);
-      File f = File(outputFile!);
+      String csv = ClassModel.toCsv(classes);
+      File f = File(outputFile);
       f.writeAsString(csv);
       final exPath = f.path;
       await File(exPath).create(recursive: true);
     }
   }
 
-  void exportToJSON() async{
+  void exportToJSON() async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Please select an output file:',
       fileName: 'Horário.json',
@@ -140,14 +155,24 @@ class _ClassesScreenState extends State<ClassesScreen> {
     if (outputFile == null) {
       // User canceled the picker
     } else {
-
-      String json = jsonEncode(aulas);
-      File f = File(outputFile!);
+      String json = jsonEncode(classes);
+      File f = File(outputFile);
       f.writeAsString(json);
       final exPath = f.path;
       await File(exPath).create(recursive: true);
-
     }
+  }
+
+  void noCsvDialog(){
+    showDialog(context: context, builder: (context) => const AlertDialog(title: Text("Not a csv")),);
+  }
+
+  void openSaveDialog(){
+    showDialog(context: context, builder: (context) => SaveFileDialog(onTap1: exportToCSV, onTap2: exportToJSON, title: 'Guardar Ficheiro Aulas',),);
+  }
+  
+  void openAppointmentClassDialog(){
+    showDialog(context: context, builder: (context) => const ClassAppointmentDialog(title: "Marcação de Aulas"),);
   }
 
   /// Hides the column at the specified index.
@@ -157,10 +182,10 @@ class _ClassesScreenState extends State<ClassesScreen> {
   ///
   /// Parameters:
   /// - [index]: int value of the index to hide
-  void hideColumn(int index){
+  void hideColumn(int index) {
     setState(() {
-    visibleColumns[index] = false;
-    hiddenColumnNames.add(columnNames[index]);
+      visibleColumns[index] = false;
+      hiddenColumnNames.add(columnNames[index]);
     });
   }
 
@@ -190,102 +215,78 @@ class _ClassesScreenState extends State<ClassesScreen> {
             StyledButton(
               onPressed: () {
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return InputDialog(
-                        text: "Introduza uma URL",
-                        onInputSubmitted: (String url) {
-                          importOnlineFiles(url);
-                        },
-                      );
-                    },
+                  context: context,
+                  builder: (BuildContext context) {
+                    return InputDialog(
+                      text: "Introduza uma URL",
+                      onInputSubmitted: (String url) {
+                        importOnlineFiles(url);
+                      },
+                    );
+                  },
                 );
               },
               text: "Importar ficheiro online",
               icon: Icons.wifi,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.15,
-              height: MediaQuery.of(context).size.height * 0.04,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.indigo),
-              ),
-              child: DropdownButton(
-                alignment: Alignment.topCenter,
-                focusColor: Colors.white,
-                value: searchLogicDropDownValue,
-                items: const [
-                  DropdownMenuItem(
-                    alignment: Alignment.centerLeft,
-                    value: 0,
-                    child: Text("  Lógica E"),
-                  ),
-                  DropdownMenuItem(
-                    alignment: Alignment.centerLeft,
-                    value: 1,
-                    child: Text("  Lógica OU"),
-                  ),
-                ],
-                onChanged: (index) {
-                  setState(() {
-                    searchLogic = index == 0 ? false : true;
-                    searchLogicDropDownValue = index!;
-                  });
-                },
-              ),
+            StyledDropDown(
+              items: const [
+                Text("Lógica E"),
+                Text("Logica OU"),
+              ],
+              horizontalPadding: 10,
+              onTap: (index) {
+                setState(() {
+                  searchLogic = index == 0 ? false : true;
+                  searchLogicDropDownValue = index;
+                });
+              },
+              changeValue: true,
+              width: 200,
             ),
             const SizedBox(
               width: 20,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.15,
-              height: MediaQuery.of(context).size.height * 0.04,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.indigo),
-              ),
-              child: DropdownButton(
-                alignment: Alignment.topCenter,
-                focusColor: Colors.white,
-                value: searchLogicDropDownValue,
-                items: [
-                  ...hiddenColumnNames.mapIndexed((index, columnName) {
-                    return DropdownMenuItem(
-                      value: index,
-                      child: Row(
-                        children: [
-                          Text(
-                            columnName,
-                          ),
-                          const SizedBox(width: 20,),
-                          const Icon(Icons.remove_red_eye_outlined),
-                        ],
+            StyledDropDown(
+              items: [
+                ...hiddenColumnNames.mapIndexed((index, columnName) {
+                  return Row(
+                    children: [
+                      Text(
+                        columnName,
                       ),
-                    );
-                  }),
-                ],
-                onChanged: (index) {
-                  setState(() {
-                    visibleColumns[columnNames.indexOf(hiddenColumnNames[index!])] = true; //makes column visible again;
-                    hiddenColumnNames.removeAt(index);
-                  });
-                },
-              ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      const Icon(Icons.remove_red_eye_outlined),
+                    ],
+                  );
+                })
+              ],
+              horizontalPadding: 10,
+              onTap: (index) {
+                setState(() {
+                  visibleColumns[
+                          columnNames.indexOf(hiddenColumnNames[index])] =
+                      true; //makes column visible again;
+                  hiddenColumnNames.removeAt(index);
+                });
+              },
+              width: 200,
             ),
             StyledButton(
               onPressed: () {
-                exportToCSV();
+                openSaveDialog();
               },
-              text: "Gravar alterações para CSV",
-              icon: Icons.download,
+              text: "Guardar Alterações",
+              width: 200,
             ),
             StyledButton(
               onPressed: () {
-                exportToJSON();
+                openAppointmentClassDialog();
               },
-              text: "Gravar alterações para JSON",
-              icon: Icons.download,
+              text: "Marcar Aulas",
+              width: 200,
             ),
           ],
         ),
@@ -294,7 +295,6 @@ class _ClassesScreenState extends State<ClassesScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //TODO Review this widget tree
               Expanded(
                 child: Column(
                   children: [
@@ -302,7 +302,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: ClassesPaginatedTable(
-                        aulas: aulas,
+                        classes: classes,
                         columnNames: columnNames,
                         visibleColumns: visibleColumns,
                         hideColumn: hideColumn,

@@ -3,14 +3,6 @@ import 'package:csv/csv.dart';
 /// This model represents all data related to a class
 class ClassRoomModel {
 
-  /// Converts a string representation of boolean ("X" for true) to a boolean value.
-  ///
-  /// Returns:
-  /// true if the input string is "X"; otherwise, returns false.
-  bool convertStringToBool(String string) {
-    return string == "X";
-  }
-
   /// The name of the building where the room is located.
   late String building;
 
@@ -27,94 +19,94 @@ class ClassRoomModel {
   late String characteristicsNumber;
 
   /// Indicates if the room is an amphitheater.
-  late bool isAmphitheater;
+  late String isAmphitheater;
 
   /// Indicates if the room has tech support for events.
-  late bool isTechSupportForEvents;
+  late String isTechSupportForEvents;
 
   /// Indicates if the room has attribute Arq1.
-  late bool isArq1;
+  late String isArq1;
 
   /// Indicates if the room has attribute Arq2.
-  late bool isArq2;
+  late String isArq2;
 
   /// Indicates if the room has attribute Arq3.
-  late bool isArq3;
+  late String isArq3;
 
   /// Indicates if the room has attribute Arq4.
-  late bool isArq4;
+  late String isArq4;
 
   /// Indicates if the room has attribute Arq5.
-  late bool isArq5;
+  late String isArq5;
 
   /// Indicates if the room has attribute Arq6.
-  late bool isArq6;
+  late String isArq6;
 
   /// Indicates if the room has attribute Arq9.
-  late bool isArq9;
+  late String isArq9;
 
   /// Indicates if the room has BYOD (Bring Your Own Device) capability.
-  late bool isBYOD;
+  late String isBYOD;
 
   /// Indicates if the room is suitable for focus groups.
-  late bool isFocusGroup;
+  late String isFocusGroup;
 
   /// Indicates if the room has a public schedule.
-  late bool hasPublicSchedule;
+  late String hasPublicSchedule;
 
   /// Indicates if the room is FACLab1.
-  late bool isFACLab1;
+  late String isFACLab1;
 
   /// Indicates if the room is FACLab2.
-  late bool isFACLab2;
+  late String isFACLab2;
 
   /// Indicates if the room is BELab.
-  late bool isBELab;
+  late String isBELab;
 
   /// Indicates if the room is an electronics lab.
-  late bool isElectronicsLab;
+  late String isElectronicsLab;
 
   /// Indicates if the room is a computer lab.
-  late bool isComputerLab;
+  late String isComputerLab;
 
   /// Indicates if the room is a journalism lab.
-  late bool isJournalismLab;
+  late String isJournalismLab;
 
   /// Indicates if the room is NetworkLab1.
-  late bool isNetworkLab1;
+  late String isNetworkLab1;
 
   /// Indicates if the room is NetworkLab2.
-  late bool isNetworkLab2;
+  late String isNetworkLab2;
 
   /// Indicates if the room is a telecommunications lab.
-  late bool isTelecommunicationsLab;
+  late String isTelecommunicationsLab;
 
   /// Indicates if the room is a masters lab.
-  late bool isMastersRoom;
+  late String isMastersRoom;
 
   /// Indicates if the room is a masters lab plus.
-  late bool isMastersRoomPlus;
+  late String isMastersRoomPlus;
 
   /// Indicates if the room is a NEE room.
-  late bool isNEERoom;
+  late String isNEERoom;
 
   /// Indicates if the room is a Exam room.
-  late bool isExamRoom;
+  late String isExamRoom;
 
   /// Indicates if the room is a reunion room.
-  late bool isReunionRoom;
+  late String isReunionRoom;
 
   /// Indicates if the room is an architecture room.
-  late bool isArchitectureRoom;
+  late String isArchitectureRoom;
 
   /// Indicates if the room is a normal room.
-  late bool isNormalRoom;
+  late String isNormalRoom;
 
   /// Indicates if the room has videoconference gear.
-  late bool hasVideoconferenceGear;
+  late String hasVideoconferenceGear;
 
   /// Indicates if the room is an atrium.
-  late bool isAtrium;
+  late String isAtrium;
 
   /// ClassRoomModel constructor
   ClassRoomModel({
@@ -168,36 +160,36 @@ class ClassRoomModel {
     normalCapacity = list[2].toString();
     examCapacity = list[3].toString();
     characteristicsNumber = list[4].toString();
-    isAmphitheater = convertStringToBool(list[5]);
-    isTechSupportForEvents = convertStringToBool(list[6]);
-    isArq1 = convertStringToBool(list[7]);
-    isArq2 = convertStringToBool(list[8]);
-    isArq3 = convertStringToBool(list[9]);
-    isArq4 = convertStringToBool(list[10]);
-    isArq5 = convertStringToBool(list[11]);
-    isArq6 = convertStringToBool(list[12]);
-    isArq9 = convertStringToBool(list[13]);
-    isBYOD = convertStringToBool(list[14]);
-    isFocusGroup = convertStringToBool(list[15]);
-    hasPublicSchedule = convertStringToBool(list[16]);
-    isFACLab1 = convertStringToBool(list[17]);
-    isFACLab2 = convertStringToBool(list[18]);
-    isBELab = convertStringToBool(list[19]);
-    isElectronicsLab = convertStringToBool(list[20]);
-    isComputerLab = convertStringToBool(list[21]);
-    isJournalismLab = convertStringToBool(list[22]);
-    isNetworkLab1 = convertStringToBool(list[23]);
-    isNetworkLab2 = convertStringToBool(list[24]);
-    isTelecommunicationsLab = convertStringToBool(list[25]);
-    isMastersRoom = convertStringToBool(list[26]);
-    isMastersRoomPlus = convertStringToBool(list[27]);
-    isNEERoom = convertStringToBool(list[28]);
-    isExamRoom = convertStringToBool(list[29]);
-    isReunionRoom = convertStringToBool(list[30]);
-    isArchitectureRoom = convertStringToBool(list[31]);
-    isNormalRoom = convertStringToBool(list[32]);
-    hasVideoconferenceGear = convertStringToBool(list[33]);
-    isAtrium = convertStringToBool(list[34]);
+    isAmphitheater = list[5].toString().isNotEmpty ? "X" : " - ";
+    isTechSupportForEvents = list[6].toString().isNotEmpty ? "X" : " - ";
+    isArq1 = list[7].toString().isNotEmpty ? "X" : " - ";
+    isArq2 = list[8].toString().isNotEmpty ? "X" : " - ";
+    isArq3 = list[9].toString().isNotEmpty ? "X" : " - ";
+    isArq4 = list[10].toString().isNotEmpty ? "X" : " - ";
+    isArq5 = list[11].toString().isNotEmpty ? "X" : " - ";
+    isArq6 = list[12].toString().isNotEmpty ? "X" : " - ";
+    isArq9 = list[13].toString().isNotEmpty ? "X" : " - ";
+    isBYOD = list[14].toString().isNotEmpty ? "X" : " - ";
+    isFocusGroup = list[15].toString().isNotEmpty ? "X" : " - ";
+    hasPublicSchedule = list[16].toString().isNotEmpty ? "X" : " - ";
+    isFACLab1 = list[17].toString().isNotEmpty ? "X" : " - ";
+    isFACLab2 = list[18].toString().isNotEmpty ? "X" : " - ";
+    isBELab = list[19].toString().isNotEmpty ? "X" : " - ";
+    isElectronicsLab = list[20].toString().isNotEmpty ? "X" : " - ";
+    isComputerLab = list[21].toString().isNotEmpty ? "X" : " - ";
+    isJournalismLab = list[22].toString().isNotEmpty ? "X" : " - ";
+    isNetworkLab1 = list[23].toString().isNotEmpty ? "X" : " - ";
+    isNetworkLab2 = list[24].toString().isNotEmpty ? "X" : " - ";
+    isTelecommunicationsLab = list[25].toString().isNotEmpty ? "X" : " - ";
+    isMastersRoom = list[26].toString().isNotEmpty ? "X" : " - ";
+    isMastersRoomPlus = list[27].toString().isNotEmpty ? "X" : " - ";
+    isNEERoom = list[28].toString().isNotEmpty ? "X" : " - ";
+    isExamRoom = list[29].toString().isNotEmpty ? "X" : " - ";
+    isReunionRoom = list[30].toString().isNotEmpty ? "X" : " - ";
+    isArchitectureRoom = list[31].toString().isNotEmpty ? "X" : " - ";
+    isNormalRoom = list[32].toString().isNotEmpty ? "X" : " - ";
+    hasVideoconferenceGear = list[33].toString().isNotEmpty ? "X" : " - ";
+    isAtrium = list[34].toString().isNotEmpty ? "X" : " - ";
   }
 
   /// Converts a list of lists of dynamic objects (csv representation) into a
@@ -206,7 +198,7 @@ class ClassRoomModel {
   /// - [list]: List of Lists of dynamic type (csv representation)
   /// Returns:
   /// A list of classrooms converted from the given input
-  static List<ClassRoomModel> getClassRooms(List<List<dynamic>> list){
+  static List<ClassRoomModel> getClassRooms(List<List<dynamic>> list) {
     List<ClassRoomModel> returnList = [];
 
     for (var value in list) {
@@ -221,19 +213,46 @@ class ClassRoomModel {
   /// - [list]: List of Classes
   /// Returns:
   /// A csv string with the class parameters
-  static String toCsv(List<ClassRoomModel> list){
+  static String toCsv(List<ClassRoomModel> list) {
     List<List<dynamic>> toConvert = [];
-    toConvert.add(["Edifício","Nome sala","Capacidade Normal","Capacidade Exame",
-      "Nº Características", "Anfiteatro aulas", "Apoio técnico eventos", "Arq 1",
-      "Arq 2","Arq 3","Arq 4","Arq 5", "Arq 6", "Arq 9", "BYOD (Bring Your Own Device)",
-      "Focus Group","Horário sala visível portal público", "Laboratório de Arquitectura de Computadores I",
-      "Laboratório de Arquitectura de Computadores II", "Laboratório de Bases de Engenharia",
-      "Laboratório de Electrónica", "Laboratório de Informática", "Laboratório de Jornalismo",
-      "Laboratório de Redes de Computadores I", "Laboratório de Redes de Computadores II",
-      "Laboratório de Telecomunicações", "Sala Aulas Mestrado", "Sala Aulas Mestrado Plus",
-      "Sala NEE", "Sala Provas", "Sala Reunião", "Sala de Arquitectura", "Sala de Aulas normal",
-      "Videoconferência", "Átrio"
-    ]);
+    toConvert.add(
+        [
+          "Edifício",
+          "Nome sala",
+          "Capacidade Normal",
+          "Capacidade Exame",
+          "Nº Características",
+          "Anfiteatro aulas",
+          "Apoio técnico eventos",
+          "Arq 1",
+          "Arq 2",
+          "Arq 3",
+          "Arq 4",
+          "Arq 5",
+          "Arq 6",
+          "Arq 9",
+          "BYOD (Bring Your Own Device)",
+          "Focus Group",
+          "Horário sala visível portal público",
+          "Laboratório de Arquitectura de Computadores I",
+          "Laboratório de Arquitectura de Computadores II",
+          "Laboratório de Bases de Engenharia",
+          "Laboratório de Electrónica",
+          "Laboratório de Informática",
+          "Laboratório de Jornalismo",
+          "Laboratório de Redes de Computadores I",
+          "Laboratório de Redes de Computadores II",
+          "Laboratório de Telecomunicações",
+          "Sala Aulas Mestrado",
+          "Sala Aulas Mestrado Plus",
+          "Sala NEE",
+          "Sala Provas",
+          "Sala Reunião",
+          "Sala de Arquitectura",
+          "Sala de Aulas normal",
+          "Videoconferência",
+          "Átrio"
+        ]);
 
     for (var value in list) {
       toConvert.add(value.getPropertiesList());
@@ -246,37 +265,37 @@ class ClassRoomModel {
   /// the ClassRoomModel type and its attributes
   /// Returns:
   /// A JSON Map that for any given key as the attributed value
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
-      "edifício" : building,
-      "nomeSala" : roomName,
-      "capacidadeNormal" : normalCapacity,
-      "capacidadeExame" : examCapacity,
-      "numCaracteristicas" : characteristicsNumber,
-      "anfiteatroAulas" : isAmphitheater,
-      "apoioTecnicoEventos" : isTechSupportForEvents,
-      "arq1" : isArq1,
-      "arq2" : isArq2,
-      "arq3" : isArq3,
-      "arq4" : isArq4,
-      "arq5" : isArq5,
-      "arq6" : isArq6,
-      "arq9" : isArq9,
-      "byod" : isBYOD,
-      "focusGroup" : isFocusGroup,
-      "horarioSalaVisivelPortalPublico" : hasPublicSchedule,
-      "laboratorioArquitectureDeComputadoresI" : isFACLab1,
-      "laboratorioArquitectureDeComputadoresII" : isFACLab2,
-      "laboratorioBasesDeEngenharia" : isBELab,
-      "laboratorioEletronica" : isElectronicsLab,
-      "laboratorioInformatica" : isComputerLab,
-      "laboratorioJornalismo" : isJournalismLab,
-      "laboratorioRedesDeComputadoresI" : isNetworkLab1,
-      "laboratorioRedesDeComputadoresII" : isNetworkLab2,
-      "laboratorioTelecomunicacoes" : isTelecommunicationsLab,
-      "salaAulasMestrado" : isMastersRoom,
-      "salaAulasMestradoPlus" : isMastersRoomPlus,
-      "salaNEE" : isNEERoom,
+      "edifício": building,
+      "nomeSala": roomName,
+      "capacidadeNormal": normalCapacity,
+      "capacidadeExame": examCapacity,
+      "numCaracteristicas": characteristicsNumber,
+      "anfiteatroAulas": isAmphitheater,
+      "apoioTecnicoEventos": isTechSupportForEvents,
+      "arq1": isArq1,
+      "arq2": isArq2,
+      "arq3": isArq3,
+      "arq4": isArq4,
+      "arq5": isArq5,
+      "arq6": isArq6,
+      "arq9": isArq9,
+      "byod": isBYOD,
+      "focusGroup": isFocusGroup,
+      "horarioSalaVisivelPortalPublico": hasPublicSchedule,
+      "laboratorioArquitectureDeComputadoresI": isFACLab1,
+      "laboratorioArquitectureDeComputadoresII": isFACLab2,
+      "laboratorioBasesDeEngenharia": isBELab,
+      "laboratorioEletronica": isElectronicsLab,
+      "laboratorioInformatica": isComputerLab,
+      "laboratorioJornalismo": isJournalismLab,
+      "laboratorioRedesDeComputadoresI": isNetworkLab1,
+      "laboratorioRedesDeComputadoresII": isNetworkLab2,
+      "laboratorioTelecomunicacoes": isTelecommunicationsLab,
+      "salaAulasMestrado": isMastersRoom,
+      "salaAulasMestradoPlus": isMastersRoomPlus,
+      "salaNEE": isNEERoom,
       "salaProvas": isExamRoom,
       "salaReuniao": isReunionRoom,
       "salaArquitetura": isArchitectureRoom,
@@ -289,7 +308,7 @@ class ClassRoomModel {
   /// Creates a dynamic type list with all the properties from the classroom model
   /// Returns:
   /// A List (dynamic typing) of the class attributes
-  List<dynamic> getPropertiesList(){
+  List<dynamic> getPropertiesList() {
     List<dynamic> list = [];
     list.add(building);
     list.add(roomName);
@@ -328,6 +347,115 @@ class ClassRoomModel {
     list.add(isAtrium.toString());
 
     return list;
+  }
+
+  void setProperty(int index, String value) {
+    switch (index) {
+      case 0:
+        building = value;
+        break;
+      case 1:
+        roomName = value;
+        break;
+      case 2:
+        normalCapacity = value;
+        break;
+      case 3:
+        examCapacity = value;
+        break;
+      case 4:
+        characteristicsNumber = value;
+        break;
+      case 5:
+        isAmphitheater = value != " - " ? "X" : " - ";
+        break;
+      case 6:
+        isTechSupportForEvents = value != " - " ? "X" : " - ";
+        break;
+      case 7:
+        isArq1 = value != " - " ? "X" : " - ";
+        break;
+      case 8:
+        isArq2 = value != " - " ? "X" : " - ";
+        break;
+      case 9:
+        isArq3 = value != " - " ? "X" : " - ";
+        break;
+      case 10:
+        isArq4 = value != " - " ? "X" : " - ";
+        break;
+      case 11:
+        isArq5 = value != " - " ? "X" : " - ";
+        break;
+      case 12:
+        isArq6 = value != " - " ? "X" : " - ";
+        break;
+      case 13:
+        isArq9 = value != " - " ? "X" : " - ";
+        break;
+      case 14:
+        isBYOD = value != " - " ? "X" : " - ";
+        break;
+      case 15:
+        isFocusGroup = value != " - " ? "X" : " - ";
+        break;
+      case 16:
+        hasPublicSchedule = value != " - " ? "X" : " - ";
+        break;
+      case 17:
+        isFACLab1 = value != " - " ? "X" : " - ";
+        break;
+      case 18:
+        isFACLab2 = value != " - " ? "X" : " - ";
+      case 19:
+        isBELab = value != " - " ? "X" : " - ";
+        break;
+      case 20:
+        isElectronicsLab = value != " - " ? "X" : " - ";
+        break;
+      case 21:
+        isComputerLab = value != " - " ? "X" : " - ";
+        break;
+      case 22:
+        isJournalismLab = value != " - " ? "X" : " - ";
+        break;
+      case 23:
+        isNetworkLab1 = value != " - " ? "X" : " - ";
+        break;
+      case 24:
+        isNetworkLab2 = value != " - " ? "X" : " - ";
+        break;
+      case 25:
+        isTelecommunicationsLab = value != " - " ? "X" : " - ";
+        break;
+      case 26:
+        isMastersRoom = value != " - " ? "X" : " - ";
+        break;
+      case 27:
+        isMastersRoomPlus = value != " - " ? "X" : " - ";
+        break;
+      case 28:
+        isNEERoom = value != " - " ? "X" : " - ";
+        break;
+      case 29:
+        isExamRoom = value != " - " ? "X" : " - ";
+        break;
+      case 30:
+        isReunionRoom = value != " - " ? "X" : " - ";
+        break;
+      case 31:
+        isArchitectureRoom = value != " - " ? "X" : " - ";
+        break;
+      case 32:
+        isNormalRoom = value != " - " ? "X" : " - ";
+        break;
+      case 33:
+        hasVideoconferenceGear = value != " - " ? "X" : " - ";
+        break;
+      case 34:
+        isAtrium = value != " - " ? "X" : " - ";
+        break;
+    }
   }
 
   /// Creates a string with all the classes parameters separated by spaces
