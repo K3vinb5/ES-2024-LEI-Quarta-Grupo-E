@@ -21,6 +21,8 @@ class ClassesDataSource extends DataTableSource {
   /// This function gets inherited by the screen so we can update the ui when updating any value
   final void Function(Function) updateState;
 
+  final void Function(bool) updateButtonText;
+
   /// Creates a data source for the aulas data table.
   ///
   /// The [context] parameter specifies the build context.
@@ -31,9 +33,11 @@ class ClassesDataSource extends DataTableSource {
     required this.classes,
     required this.visibleColumns,
     required this.updateState,
+    required this.updateButtonText,
   });
 
   late ClassModel thisClass;
+  bool selected = false;
   final TextEditingController _textFieldController = TextEditingController();
 
   @override
@@ -73,18 +77,22 @@ class ClassesDataSource extends DataTableSource {
                   builder: (context) {
                     return AlertDialog(
                       title: const Text("Edit Value"),
-                      backgroundColor: const Color.fromARGB(255, 197,223,243),
+                      backgroundColor: const Color.fromARGB(255, 197, 223, 243),
                       content: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.22,
                         width: MediaQuery.of(context).size.width * 0.22,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 20,),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             TextField(
                               controller: _textFieldController,
                             ),
-                            const Expanded(child: Column(),),
+                            const Expanded(
+                              child: Column(),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -94,7 +102,8 @@ class ClassesDataSource extends DataTableSource {
                                   },
                                   text: "Cancel",
                                   icon: Icons.cancel_outlined,
-                                  width: MediaQuery.of(context).size.width * 0.1,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1,
                                 ),
                                 StyledButton(
                                   onPressed: () {
@@ -106,7 +115,8 @@ class ClassesDataSource extends DataTableSource {
                                   },
                                   text: "Confirm",
                                   icon: Icons.check,
-                                  width: MediaQuery.of(context).size.width * 0.1,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1,
                                 ),
                               ],
                             ),
@@ -125,6 +135,21 @@ class ClassesDataSource extends DataTableSource {
         );
       }
     }
+    returnList.add(DataCell(StatefulBuilder(
+      builder: (context, setState) {
+        return Checkbox(
+          value: selected,
+          onChanged: (value) {
+            setState(() {
+              selected = !selected;
+            });
+            updateState(() {
+              updateButtonText(selected);
+            });
+          },
+        );
+      },
+    )));
     return returnList;
   }
 }

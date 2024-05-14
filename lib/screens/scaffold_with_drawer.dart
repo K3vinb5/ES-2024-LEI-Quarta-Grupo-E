@@ -20,7 +20,7 @@ class _ScaffoldWithDrawerState extends State<ScaffoldWithDrawer> {
     "Ecrã Grafo",
     "Ecrã Ocupação"
   ];
-  String currentScreenTitle = "Tela Aulas";
+  String currentScreenTitle = "Início";
 
   void _onTap(BuildContext context, int index) {
     // When navigating to a new branch, it's recommended to use the goBranch
