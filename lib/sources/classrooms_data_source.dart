@@ -29,9 +29,12 @@ class ClassRoomsDataSource extends DataTableSource {
   /// The [visibleColumns] parameter is a list indicating the visibility of columns.
   ClassRoomsDataSource({required this.context, required this.classRooms, required this.visibleColumns, required this.updateState});
 
+  /// An instance of the ClassRoomModel class representing the current class room being processed.
   late ClassRoomModel thisClassRoom;
-  final TextEditingController _textFieldController = TextEditingController();
 
+  ///An instance of TextEditingController used for controlling an editable text field widget.
+  /// It allows for editing the text displayed in the text field and listening to changes made to the text.
+  final TextEditingController _textFieldController = TextEditingController();
 
   @override
   bool get isRowCountApproximate => false;
@@ -56,6 +59,11 @@ class ClassRoomsDataSource extends DataTableSource {
     );
   }
 
+  /// Generates a list of data cells for a given class room and index.
+  ///
+  /// This method generates a list of data cells for a given class room and index,
+  /// based on the visible columns specified by the [visibleColumns] parameter.
+  /// Each data cell contains an editable text field that allows editing the corresponding property value.
   List<DataCell> dataCells(ClassRoomModel thisClassRoom, int index) {
     List<DataCell> returnList = [];
     for(int i = 0; i < thisClassRoom.getPropertiesList().length; i++){

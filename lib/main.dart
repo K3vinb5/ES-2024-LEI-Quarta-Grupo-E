@@ -9,22 +9,37 @@ void main() {
   runApp(const MyApp());
 }
 
+/// List of global instances of [ClassModel].
 List<ClassModel> globalClasses = [];
+
+/// List of global instances of [ClassRoomModel].
 List<ClassRoomModel> globalClassRooms = [];
 
+/// Key for the root navigator.
 final GlobalKey<NavigatorState> _rootNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'root');
+
+/// Key for the navigator controlling the classes section.
 final GlobalKey<NavigatorState> _classesNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'classes');
+
+/// Key for the navigator controlling the class rooms section.
 final GlobalKey<NavigatorState> _classRoomsNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'classRooms');
+
+/// Key for the navigator controlling the class graph section.
 final GlobalKey<NavigatorState> _graphNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'classGraph');
+
+/// Key for the navigator controlling the class rooms occupation section.
 final GlobalKey<NavigatorState> _occupationNavigationKey =
 GlobalKey<NavigatorState>(debugLabel: 'classRoomsOccupation');
+
+/// Key for the navigator controlling the home section.
 final GlobalKey<NavigatorState> _homeNavigationKey =
 GlobalKey<NavigatorState>(debugLabel: 'home');
 
+/// The router instance responsible for handling navigation.
 final GoRouter _router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/home',

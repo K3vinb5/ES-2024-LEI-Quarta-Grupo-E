@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// A styled text field widget for entering text.
 class StyledTextField extends StatelessWidget {
+
+  /// Constructs a [StyledTextField] widget.
   const StyledTextField(
       {super.key,
       required this.controller,
@@ -14,16 +17,34 @@ class StyledTextField extends StatelessWidget {
       this.readOnly,
       });
 
+  /// The controller for the text field.
   final TextEditingController controller;
+
+  /// The width of the text field.
   final double width;
+
+  /// The hint text to be displayed when the text field is empty.
   final String hint;
+
+  /// The color of the text field borders and cursor.
   final Color color;
+
+  /// The color of the hint text.
   final Color hintColor;
+
+  /// The color of the text entered in the text field.
   final Color? textColor;
+
+  /// A callback function that is called when the text field's value changes.
   final void Function(String)? onChanged;
+
+  /// The label text to be displayed above the text field.
   final String? label;
+
+  /// A flag indicating whether the text field is read-only.
   final bool? readOnly;
 
+  /// Builds the Widget's UI
   @override
   Widget build(BuildContext context) {
     return SizedBox(

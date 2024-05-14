@@ -11,16 +11,29 @@ import 'package:calendario_iscte/models/models.dart';
 import 'package:calendario_iscte/dialogs/dialogs.dart';
 import 'package:collection/collection.dart';
 
+/// A screen widget for displaying class rooms information.
+///
+/// This widget is a screen that displays information about class rooms.
+/// It extends [StatefulWidget] to manage its mutable state.
 class ClassRoomsScreen extends StatefulWidget {
+
+  /// Constructs a [ClassRoomsScreen] widget.
   const ClassRoomsScreen({super.key});
 
   @override
   State<ClassRoomsScreen> createState() => _ClassRoomsScreenState();
 }
 
+/// The state for managing the UI and data of the [ClassRoomsScreen] widget.
+///
+/// This state class is responsible for managing the state of the screen widget,
+/// including the list of class room models and column names for display.
 class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
+
+  /// The list of class room models to be displayed.
   List<ClassRoomModel> classRooms = [];
 
+  /// The list of column names for display.
   List<String> columnNames = [
     "Edifício",
     "Nome sala",
@@ -84,6 +97,11 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     }
   }
 
+  /// Imports local CSV files and updates the class room data accordingly.
+  ///
+  /// This method prompts the user to select a local CSV file using a file picker.
+  /// It reads the CSV file, parses its contents, and updates the class room data
+  /// with the parsed information.
   void importLocalFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -102,6 +120,11 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     }
   }
 
+  /// Imports online CSV files from the provided URL and updates the class room data accordingly.
+  ///
+  /// This method takes a URL as input, fetches the CSV file from the URL using HTTP GET request,
+  /// parses its contents, and updates the class room data with the parsed information.
+  /// If the content type of the response is not CSV, it displays a dialog indicating the error.
   void importOnlineFiles(String url) async {
     try {
       final response = await http.get(Uri.parse(url));
@@ -130,6 +153,10 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     }
   }
 
+  /// Exports class room data to a CSV file.
+  ///
+  /// This method prompts the user to select an output file location using a file picker.
+  /// It converts the class room data to CSV format and writes it to the selected file.
   void exportToCSV() async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Please select an output file:',
@@ -147,6 +174,10 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     }
   }
 
+  /// Exports class room data to a JSON file.
+  ///
+  /// This method prompts the user to select an output file location using a file picker.
+  /// It converts the class room data to JSON format and writes it to the selected file.
   void exportToJSON() async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Please select an output file:',
@@ -164,14 +195,26 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     }
   }
 
+  /// Displays a dialog indicating that the file format is not CSV.
+  ///
+  /// This method displays an alert dialog indicating that the file format is not CSV.
   void noCsvDialog(){
     showDialog(context: context, builder: (context) => const AlertDialog(title: Text("Not a csv")),);
   }
 
+  /// Opens a save dialog for exporting class room data.
+  ///
+  /// This method displays a custom save dialog where the user can choose to export
+  /// the class room data either to a CSV file or a JSON file.
   void openSaveDialog(){
     showDialog(context: context, builder: (context) => SaveFileDialog(onTap1: exportToCSV, onTap2: exportToJSON, title: 'Guardar Ficheiro Salas',),);
   }
 
+  /// Hides a column in the class room data table.
+  ///
+  /// This method updates the visibility of a column in the class room data table.
+  /// It sets the visibility of the column at the specified [index] to false and adds
+  /// the column name to the list of hidden column names.
   void hideColumn(int index) {
     setState(() {
       visibleColumns[index] = false;
@@ -179,6 +222,7 @@ class _ClassRoomsScreenState extends State<ClassRoomsScreen> {
     });
   }
 
+  /// Builds the Widget's UI
   @override
   Widget build(BuildContext context) {
     return Column(

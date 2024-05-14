@@ -141,6 +141,10 @@ class _ClassesScreenState extends State<ClassesScreen> {
     }
   }
 
+  /// Exports class data to a CSV file.
+  ///
+  /// This method prompts the user to select an output file location using a file picker.
+  /// It converts the class data to CSV format and writes it to the selected file.
   void exportToCSV() async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Please select an output file:',
@@ -158,6 +162,10 @@ class _ClassesScreenState extends State<ClassesScreen> {
     }
   }
 
+  /// Exports class data to a JSON file.
+  ///
+  /// This method prompts the user to select an output file location using a file picker.
+  /// It converts the class data to JSON format and writes it to the selected file.
   void exportToJSON() async {
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Please select an output file:',
@@ -175,14 +183,24 @@ class _ClassesScreenState extends State<ClassesScreen> {
     }
   }
 
+  /// Displays a dialog indicating that the file format is not CSV.
+  ///
+  /// This method displays an alert dialog indicating that the file format is not CSV.
   void noCsvDialog(){
     showDialog(context: context, builder: (context) => const AlertDialog(title: Text("Not a csv")),);
   }
 
+  /// Opens a save dialog for exporting class data.
+  ///
+  /// This method displays a custom save dialog where the user can choose to export
+  /// the class data either to a CSV file or a JSON file.
   void openSaveDialog(){
     showDialog(context: context, builder: (context) => SaveFileDialog(onTap1: exportToCSV, onTap2: exportToJSON, title: 'Guardar Ficheiro Aulas',),);
   }
-  
+
+  /// Opens the class appointment dialog.
+  ///
+  /// This method displays a dialog for scheduling class appointments.
   void openAppointmentClassDialog(){
     showDialog(context: context, builder: (context) => const ClassAppointmentDialog(title: "Marcação de Aulas"),);
   }

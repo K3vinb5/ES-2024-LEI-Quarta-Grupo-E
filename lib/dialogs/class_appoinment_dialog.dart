@@ -2,21 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 import 'package:collection/collection.dart';
 
+/// A dialog widget for class appointments.
+///
+/// This widget is a dialog that allows users to schedule class appointments.
+/// It extends [StatefulWidget] to manage its mutable state.
 class ClassAppointmentDialog extends StatefulWidget {
+
+  /// Constructs a [ClassAppointmentDialog] widget.
+  ///
+  /// The [title] parameter is required and specifies the title of the dialog.
   const ClassAppointmentDialog({super.key, required this.title});
 
+  /// The title of the dialog.
   final String title;
 
   @override
   State<ClassAppointmentDialog> createState() => _ClassAppointmentDialogState();
 }
 
+/// The state for managing the UI and data of the [ClassAppointmentDialog] widget.
+///
+/// This state class is responsible for managing the state of the dialog widget,
+/// including text controllers for input fields, selected time slots, and room types.
 class _ClassAppointmentDialogState extends State<ClassAppointmentDialog> {
+
+  /// Controller for the 'from' date input field.
   TextEditingController fromDate = TextEditingController();
+
+  /// Controller for the 'to' date input field.
   TextEditingController toDate = TextEditingController();
+
+  /// Selected 'from' time slot.
   String fromTime = "08:00";
+
+  /// Selected 'to' time slot.
   String toTime = "08:00";
+
+  /// List of week days.
   final List<String> weekDays = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
+  /// List of available time slots for starting classes.
   final List<String> fromClassesTimes = [
     "08:00",
     "09:30",
@@ -31,6 +56,8 @@ class _ClassAppointmentDialogState extends State<ClassAppointmentDialog> {
     "21:00",
     "22:30"
   ];
+
+  /// List of available time slots for ending classes.
   final List<String> toClassesTimes = [
     "08:00",
     "09:30",
@@ -45,6 +72,8 @@ class _ClassAppointmentDialogState extends State<ClassAppointmentDialog> {
     "21:00",
     "22:30"
   ];
+
+  /// List of available class room types.
   final List<String> classRoomTypes = [
     "Selecione Tipos...",
     "Anfiteatro aulas",
@@ -78,9 +107,17 @@ class _ClassAppointmentDialogState extends State<ClassAppointmentDialog> {
     "Videoconferência",
     "Átrio"
   ];
+
+  /// List of indices representing selected class room types.
   List<int> selectedClassRoomTypesIndex = [];
+
+  /// List of text styles for displaying class room types.
   late List<TextStyle> classRoomTypesTextStyles;
+
+  /// List of selected time intervals.
   List<String> selectedIntervalTimes = [];
+
+  /// List of colors for each day of the week.
   List<Color> weekColors = List.filled(6, Colors.grey);
 
   @override
@@ -89,16 +126,23 @@ class _ClassAppointmentDialogState extends State<ClassAppointmentDialog> {
     classRoomTypesTextStyles = List.filled(classRoomTypes.length, const TextStyle(color: Colors.black, fontWeight: FontWeight.normal));
   }
 
+  /// Generates a list of widgets representing time slots.
+  ///
+  /// Each widget in the list displays a time slot.
   List<Widget> listTimings(List<String> times) {
     return times.map((time) => Text(time)).toList();
   }
 
+  /// Generates a list of widgets representing selected time intervals.
+  ///
+  /// Each widget in the list displays a selected time interval.
   List<Widget> listSelectedTimeIntervals() {
     return selectedIntervalTimes
         .map((timeInterval) => Text(timeInterval))
         .toList();
   }
 
+  /// Builds the Widget's UI
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

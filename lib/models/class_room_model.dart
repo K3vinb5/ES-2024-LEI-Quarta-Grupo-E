@@ -349,6 +349,9 @@ class ClassRoomModel {
     return list;
   }
 
+  /// Sets a property value based on the provided index.
+  ///
+  /// This method assigns the [value] to a property determined by the [index].
   void setProperty(int index, String value) {
     switch (index) {
       case 0:
