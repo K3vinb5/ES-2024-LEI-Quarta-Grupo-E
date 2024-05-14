@@ -5,13 +5,14 @@ import 'package:calendario_iscte/sources/sources.dart';
 import 'widgets.dart';
 import 'package:data_table_2/data_table_2.dart';
 
+
+
 /// A paginated table widget for displaying classes (aulas).
 ///
 /// This widget displays classes (aulas) in a paginated table format. It allows
 /// users to navigate through multiple pages of data and provides options for
 /// hiding columns based on user preferences.
 class ClassesPaginatedTable extends StatefulWidget {
-
   /// Creates a paginated table widget for displaying classes.
   ///
   /// The [key] parameter is an optional key to identify this widget.
@@ -27,6 +28,7 @@ class ClassesPaginatedTable extends StatefulWidget {
     required this.searchLogic,
     required this.visibleColumns,
     required this.hideColumn,
+    required this.updateButtonText,
   });
 
   /// The list of classes (aulas) to display.
@@ -40,6 +42,8 @@ class ClassesPaginatedTable extends StatefulWidget {
 
   /// Callback function to hide a column.
   final void Function(int) hideColumn; //Callback
+
+  final void Function(bool) updateButtonText;
 
   /// Specifies the search logic to use.
   final bool searchLogic;
@@ -55,7 +59,6 @@ class ClassesPaginatedTable extends StatefulWidget {
 /// This state class manages the state of the AulasPaginatedTable widget,
 /// including the current list of classes (aulas), column sorting, and search logic.
 class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
-
   /// The current list of classes displayed in the table.
   late List<ClassModel> currentClasses;
 
@@ -127,7 +130,6 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
       });
     }
   }
-
 
   /// Searches all columns with 'AND' logic.
   ///
@@ -201,13 +203,65 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
       ascending[index] = !ascending[index];
       currentClasses.sort((a, b) {
         if (ascending[index]) {
-          return compareTo(a, b);
+          if (widget.columnNames[index] == "Dia"){
+            final List<String> daysOfWeekBase = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+            return daysOfWeekBase.indexOf(a.getPropertiesList()[index]).compareTo(daysOfWeekBase.indexOf(b.getPropertiesList()[index]),);
+          } else {
+            return _compareStrings(a.getPropertiesList()[index], b.getPropertiesList()[index]);
+            //return compareTo(a,b);
+          }
+
         } else {
-          return -1 * compareTo(a, b);
+          if (widget.columnNames[index] == "Dia"){
+            final List<String> daysOfWeekBase = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+            return daysOfWeekBase.indexOf(b.getPropertiesList()[index]).compareTo(
+              daysOfWeekBase.indexOf(a.getPropertiesList()[index]),);
+          }else{
+            return -1 * _compareStrings(a.getPropertiesList()[index], b.getPropertiesList()[index]);
+            //return -1 * compareTo(a, b);
+          }
         }
       });
     });
   }
+
+  int _compareStrings(String a, String b) {
+    for (int i = 0; i < a.length && i < b.length; i++) {
+      int charCodeA = a.codeUnitAt(i);
+      int charCodeB = b.codeUnitAt(i);
+
+      bool isADigit = (charCodeA >= 48 && charCodeA <= 57);
+      bool isBDigit = (charCodeB >= 48 && charCodeB <= 57);
+
+      if (isADigit && !isBDigit) {
+        return -1;
+      } else if (!isADigit && isBDigit) {
+        return 1;
+      }
+
+      if (charCodeA == charCodeB) {
+        continue;
+      }
+
+      bool isALetter = (charCodeA >= 65 && charCodeA <= 122);
+      bool isBLetter = (charCodeB >= 65 && charCodeB <= 122);
+
+      if (isALetter && !isBLetter) {
+        return -1;
+      } else if (!isALetter && isBLetter) {
+        return 1;
+      }
+
+      if (charCodeA != charCodeB) {
+        return charCodeB - charCodeA;
+      }
+    }
+
+    return b.length - a.length;
+  }
+
+
+
 
   /// Generates a list of DataColumn widgets for the table columns.
   ///
@@ -220,7 +274,9 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
         returnList.add(DataColumn(
           label: MyDataColumnLabel(
             text: widget.columnNames[i],
-            hideColumn: (){widget.hideColumn(i);},
+            hideColumn: () {
+              widget.hideColumn(i);
+            },
             onChanged: (value) {
               searchLogic
                   ? searchOrLogic(
@@ -248,6 +304,9 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
         ));
       }
     }
+    returnList.add(
+      const DataColumn(label: Text("")),
+    );
     return returnList;
   }
 
@@ -271,13 +330,14 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
         ...columns(),
       ],
       source: ClassesDataSource(
+        context: context,
         updateState: (change) {
           setState(() {
             change();
             globalClasses = currentClasses;
           });
         },
-        context: context,
+        updateButtonText: widget.updateButtonText,
         classes: currentClasses,
         visibleColumns: visibleColumns,
       ),

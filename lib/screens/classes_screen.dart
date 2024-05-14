@@ -62,10 +62,22 @@ class _ClassesScreenState extends State<ClassesScreen> {
   /// Dropdown value for the search logic.
   int searchLogicDropDownValue = 0;
 
+  bool substituition = false;
+  List<String> possibleNames = ["Marcar Aula", "Substituir Aula"];
+  String buttonName = "Marcar Aula";
+
   @override
   void initState() {
     super.initState();
     visibleColumns = List.filled(columnNames.length, true);
+  }
+
+  void updateButtonText(bool change){
+    print("Called $change");
+    substituition = change;
+    /*setState(() {
+      buttonName = possibleNames[change ? 1 : 0];
+    });*/
   }
 
   /// Imports files asynchronously.
@@ -303,7 +315,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
               onPressed: () {
                 openAppointmentClassDialog();
               },
-              text: "Marcar Aulas",
+              text: buttonName,
               width: 200,
             ),
           ],
@@ -325,6 +337,7 @@ class _ClassesScreenState extends State<ClassesScreen> {
                         visibleColumns: visibleColumns,
                         hideColumn: hideColumn,
                         searchLogic: searchLogic,
+                        updateButtonText: updateButtonText,
                       ),
                     ),
                   ],

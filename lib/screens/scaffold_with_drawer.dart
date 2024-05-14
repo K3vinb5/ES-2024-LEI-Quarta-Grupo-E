@@ -38,8 +38,7 @@ class _ScaffoldWithDrawerState extends State<ScaffoldWithDrawer> {
     "Ecrã Ocupação"
   ];
 
-  /// The title of the currently active screen.
-  String currentScreenTitle = "Tela Aulas";
+  String currentScreenTitle = "Início";
 
   /// Handles navigation to different screens.
   ///
