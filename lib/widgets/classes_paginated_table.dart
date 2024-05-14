@@ -5,6 +5,8 @@ import 'package:calendario_iscte/sources/sources.dart';
 import 'widgets.dart';
 import 'package:data_table_2/data_table_2.dart';
 
+
+
 /// A paginated table widget for displaying classes (aulas).
 ///
 /// This widget displays classes (aulas) in a paginated table format. It allows
@@ -201,13 +203,65 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
       ascending[index] = !ascending[index];
       currentClasses.sort((a, b) {
         if (ascending[index]) {
-          return compareTo(a, b);
+          if (widget.columnNames[index] == "Dia"){
+            final List<String> daysOfWeekBase = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+            return daysOfWeekBase.indexOf(a.getPropertiesList()[index]).compareTo(daysOfWeekBase.indexOf(b.getPropertiesList()[index]),);
+          } else {
+            return _compareStrings(a.getPropertiesList()[index], b.getPropertiesList()[index]);
+            //return compareTo(a,b);
+          }
+
         } else {
-          return -1 * compareTo(a, b);
+          if (widget.columnNames[index] == "Dia"){
+            final List<String> daysOfWeekBase = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+            return daysOfWeekBase.indexOf(b.getPropertiesList()[index]).compareTo(
+              daysOfWeekBase.indexOf(a.getPropertiesList()[index]),);
+          }else{
+            return -1 * _compareStrings(a.getPropertiesList()[index], b.getPropertiesList()[index]);
+            //return -1 * compareTo(a, b);
+          }
         }
       });
     });
   }
+
+  int _compareStrings(String a, String b) {
+    for (int i = 0; i < a.length && i < b.length; i++) {
+      int charCodeA = a.codeUnitAt(i);
+      int charCodeB = b.codeUnitAt(i);
+
+      bool isADigit = (charCodeA >= 48 && charCodeA <= 57);
+      bool isBDigit = (charCodeB >= 48 && charCodeB <= 57);
+
+      if (isADigit && !isBDigit) {
+        return -1;
+      } else if (!isADigit && isBDigit) {
+        return 1;
+      }
+
+      if (charCodeA == charCodeB) {
+        continue;
+      }
+
+      bool isALetter = (charCodeA >= 65 && charCodeA <= 122);
+      bool isBLetter = (charCodeB >= 65 && charCodeB <= 122);
+
+      if (isALetter && !isBLetter) {
+        return -1;
+      } else if (!isALetter && isBLetter) {
+        return 1;
+      }
+
+      if (charCodeA != charCodeB) {
+        return charCodeB - charCodeA;
+      }
+    }
+
+    return b.length - a.length;
+  }
+
+
+
 
   /// Generates a list of DataColumn widgets for the table columns.
   ///
