@@ -13,7 +13,6 @@ import 'package:data_table_2/data_table_2.dart';
 /// users to navigate through multiple pages of data and provides options for
 /// hiding columns based on user preferences.
 class ClassesPaginatedTable extends StatefulWidget {
-
   /// Creates a paginated table widget for displaying classes.
   ///
   /// The [key] parameter is an optional key to identify this widget.
@@ -29,6 +28,7 @@ class ClassesPaginatedTable extends StatefulWidget {
     required this.searchLogic,
     required this.visibleColumns,
     required this.hideColumn,
+    required this.updateButtonText,
   });
 
   /// The list of classes (aulas) to display.
@@ -42,6 +42,8 @@ class ClassesPaginatedTable extends StatefulWidget {
 
   /// Callback function to hide a column.
   final void Function(int) hideColumn; //Callback
+
+  final void Function(bool) updateButtonText;
 
   /// Specifies the search logic to use.
   final bool searchLogic;
@@ -57,7 +59,6 @@ class ClassesPaginatedTable extends StatefulWidget {
 /// This state class manages the state of the AulasPaginatedTable widget,
 /// including the current list of classes (aulas), column sorting, and search logic.
 class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
-
   /// The current list of classes displayed in the table.
   late List<ClassModel> currentClasses;
 
@@ -129,7 +130,6 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
       });
     }
   }
-
 
   /// Searches all columns with 'AND' logic.
   ///
@@ -274,7 +274,9 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
         returnList.add(DataColumn(
           label: MyDataColumnLabel(
             text: widget.columnNames[i],
-            hideColumn: (){widget.hideColumn(i);},
+            hideColumn: () {
+              widget.hideColumn(i);
+            },
             onChanged: (value) {
               searchLogic
                   ? searchOrLogic(
@@ -302,6 +304,9 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
         ));
       }
     }
+    returnList.add(
+      const DataColumn(label: Text("")),
+    );
     return returnList;
   }
 
@@ -325,13 +330,14 @@ class _MyPaginatedTableState extends State<ClassesPaginatedTable> {
         ...columns(),
       ],
       source: ClassesDataSource(
+        context: context,
         updateState: (change) {
           setState(() {
             change();
             globalClasses = currentClasses;
           });
         },
-        context: context,
+        updateButtonText: widget.updateButtonText,
         classes: currentClasses,
         visibleColumns: visibleColumns,
       ),
