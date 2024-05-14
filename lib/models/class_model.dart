@@ -36,8 +36,10 @@ class ClassModel {
   /// Stores the class room in which this class is given
   late String room;
 
+  /// Stores the class's week of the year
   late String yearWeek;
 
+  /// Stores the class's semester
   late String semesterWeek;
 
   /// ClassModel constructor
@@ -74,8 +76,8 @@ class ClassModel {
     date            = list[8];
     characteristics = list[9];
     room            = list[10].toString();
-    semesterWeek = calculateSemesterWeek(list[8]);
-    yearWeek = calculateYearWeek(list[8]);
+    semesterWeek    = calculateSemesterWeek(list[8]);
+    yearWeek        = calculateYearWeek(list[8]);
   }
 
   /// Converts a list of lists of dynamic objects (csv representation) into a
@@ -115,6 +117,9 @@ class ClassModel {
     return list;
   }
 
+  /// Sets a property value based on the provided index.
+  ///
+  /// This method assigns the [value] to a property determined by the [index].
   void setProperty(int index, String value){
     switch (index){
       case 0:

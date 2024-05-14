@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 
+/// A screen widget representing the home screen of the application.
+///
+/// This widget serves as the main screen of the application.
+/// It extends [StatefulWidget] to manage its mutable state.
 class HomeScreen extends StatefulWidget {
+
+  /// Constructs a [HomeScreen] widget.
   const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+/// The state for managing the UI and data of the [HomeScreen] widget.
+///
+/// This state class is responsible for managing the state of the home screen widget,
+/// including its initialization and the build method for rendering the UI.
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   void initState() {
     super.initState();
   }
 
+  /// Builds the Widget's UI
   @override
   Widget build(BuildContext context) {
     return Padding(

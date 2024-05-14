@@ -9,6 +9,7 @@ import 'package:data_table_2/data_table_2.dart';
 /// for displaying classes in a data table. It contains methods to retrieve
 /// individual rows of data and to determine the total number of rows.
 class ClassesDataSource extends DataTableSource {
+
   /// The build context.
   final BuildContext context;
 
@@ -33,7 +34,10 @@ class ClassesDataSource extends DataTableSource {
     required this.updateState,
   });
 
+  /// The current class model being processed.
   late ClassModel thisClass;
+
+  /// A text editing controller for handling text input.
   final TextEditingController _textFieldController = TextEditingController();
 
   @override
@@ -59,6 +63,14 @@ class ClassesDataSource extends DataTableSource {
     );
   }
 
+  /// Generates a list of data cells for a given class and index.
+  ///
+  /// This method generates a list of data cells for a given class and index,
+  /// based on the visible columns specified by the [visibleColumns] parameter.
+  /// Each data cell contains a text field that allows editing the corresponding property value.
+  ///
+  /// The [thisClass] parameter represents the class model for which data cells are generated.
+  /// The [index] parameter specifies the index of the class model in the data source.
   List<DataCell> dataCells(ClassModel thisClass, int index) {
     List<DataCell> returnList = [];
     for (int i = 0; i < thisClass.getPropertiesList().length; i++) {

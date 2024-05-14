@@ -3,9 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:calendario_iscte/models/models.dart';
 import 'package:calendario_iscte/widgets/widgets.dart';
 
+/// A screen widget for displaying classroom occupation information.
+///
+/// This widget is a screen that displays information about classroom occupation.
+/// It extends [StatefulWidget] to manage its mutable state.
 class ClassroomOcupationScreen extends StatefulWidget {
+
+  /// Constructs a [ClassroomOcupationScreen] widget.
+  ///
+  /// The [classRooms] parameter is required and specifies the list of class room models
+  /// to be displayed in the screen.
   const ClassroomOcupationScreen({super.key, required this.classRooms});
 
+  /// The list of class room models to be displayed in the screen.
   final List<ClassRoomModel> classRooms;
 
   @override
@@ -13,7 +23,13 @@ class ClassroomOcupationScreen extends StatefulWidget {
       _ClassroomOcupationScreenState();
 }
 
+/// The state for managing the UI and data of the [ClassroomOcupationScreen] widget.
+///
+/// This state class is responsible for managing the state of the screen widget,
+/// including the list of class room models.
 class _ClassroomOcupationScreenState extends State<ClassroomOcupationScreen> {
+
+  /// The list of class room models to be displayed.
   late List<ClassRoomModel> classRooms;
 
   @override
@@ -32,6 +48,7 @@ class _ClassroomOcupationScreenState extends State<ClassroomOcupationScreen> {
     }
   }
 
+  /// Builds the Widget's UI
   @override
   Widget build(BuildContext context) {
     return Column(
