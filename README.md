@@ -17,6 +17,7 @@ Pode encontrar uma demo do projeto [aqui](https://kevin-is-awesome.mooo.com/es/c
 
 - **Heatmap:** A funcionalidade do heatmap para visualizar de forma gráfica o mapa de ocupação
 das salas.
+- **Marcar e Substituir Aulas** Funcionalidade não foi 100% concluida.
 
 ## Documentação
 
